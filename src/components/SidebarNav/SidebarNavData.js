@@ -19,27 +19,27 @@ export const SidebarNavData = [
     _id: uuid(),
     name: "Playlist",
     icon: "queue",
-    link: "./",
+    link: "./dvsv",
   },
 
   {
     _id: uuid(),
     name: "Liked",
     icon: "favorite",
-    link: "./",
+    link: "./fdbf",
   },
 
   {
     _id: uuid(),
     name: "Watch Later",
     icon: "watch_later",
-    link: "./",
+    link: "./fdbf",
   },
 
   {
     _id: uuid(),
     name: "History",
     icon: "history",
-    link: "./",
+    link: "./adscad",
   },
 ];

@@ -1,12 +1,24 @@
 import "../../css/main.css";
 import "./CardVideo.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const CardVideo = ({ item }) => {
   const [isPlay, setIsPlay] = useState(false);
   const [isMoreOptions, setIsMoreOptions] = useState(false);
-  console.log(item);
   const { title, thumbnail, channel, profile, views, playbackTime } = item;
+
+  useEffect(() => {
+    const clickHandler = () => {
+        if(isMoreOptions){
+            setIsMoreOptions(false)
+        }
+    }
+    document.addEventListener("click", clickHandler)
+
+    return () => document.removeEventListener("click", clickHandler)
+  },[isMoreOptions])
+
+
   return (
     <div className="container-card flex flex-column flex-gap-0-5">
       <div
