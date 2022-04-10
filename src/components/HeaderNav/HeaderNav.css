@@ -1,0 +1,30 @@
+.nav-header {
+  height: 4.5rem;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.title-header {
+  color: var(--primary-color);
+}
+
+.btn-search {
+  background-color: var(--text-color);
+  color: black;
+  border: none;
+  height: 2rem;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+.input-search {
+  border: none;
+  line-height: 2rem;
+  width: 14rem;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  outline: none;
+}

@@ -1,0 +1,73 @@
+/**Must watch videos **/
+.container-card {
+  height: fit-content;
+  width: 17rem;
+}
+
+.container-img-thumbnail-card {
+  width: 17rem;
+  height: 11rem;
+  position: relative;
+}
+
+.container-overlay-img-thumbnail-card {
+  width: 17rem;
+  height: 11rem;
+  position: absolute;
+  inset: 0 0;
+  background-color: #85828280;
+}
+
+.duration-card {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 1rem;
+  background-color: #69666659;
+}
+
+.img-thumbnail-card {
+  height: inherit;
+  width: inherit;
+}
+
+.img-profile-card {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.btn-more-vert-card {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  transition: all 0.5s ease;
+}
+
+.btn-more-vert-card:hover,
+.btn-more-vert-card-active {
+  background-color: var(--navbar-background-color);
+}
+
+.text-card-video {
+  position: relative;
+}
+
+.container-overlay-text-video-card {
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  background-color: var(--navbar-background-color);
+}
+
+.item-container-overlay-text-video-card {
+  width: 100%;
+  padding: 0.2rem 0.5rem;
+}
+
+.item-container-overlay-text-video-card:hover {
+  background-color: var(--navbar-active-color);
+}
+
+.channel-card-video {
+  color: var(--text-color-dark);
+}
