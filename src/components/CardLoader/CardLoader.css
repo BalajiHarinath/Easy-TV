@@ -1,0 +1,59 @@
+.container-empty-card {
+  height: 16rem;
+  background-color: var(--navbar-background-color);
+  box-shadow: 0 0 10px #0000001a;
+}
+
+.container-img-thumbnail-card-empty {
+  width: 16rem;
+  height: 11rem;
+  position: relative;
+}
+
+.img-profile-card-empty {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.text-card-empty,
+.text-card-empty-short {
+  width: 11rem;
+  height: 1rem;
+  border-radius: 1rem;
+}
+
+.text-card-empty-short {
+  width: 5rem;
+}
+
+.btn-vert-more-card-empty {
+  height: 1.5rem;
+  width: 1rem;
+  border-radius: 50%;
+}
+
+/*Chip Loader */
+.container-chip-empty {
+  background-color: var(--navbar-background-color);
+  width: 5rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+}
+
+.container-img-thumbnail-card-empty,
+.img-profile-card-empty,
+.text-card-empty,
+.text-card-empty-short,
+.btn-vert-more-card-empty,
+.container-chip-empty {
+  background: linear-gradient(90deg, #3f3145 0%, #58465c 52%, #423145 99%);
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
+  }
+}

@@ -1,51 +1,69 @@
-.App {
-  text-align: center;
+:root {
+  --body-background-color: #443e47;
+  --navbar-active-color: #343746;
+  --navbar-background-color: #2c2e3b;
+  --navbar-background-color-light: #2c2e3b95;
+  --text-color: #ffffff;
+  --text-color-dark: #e2e0e2;
+  --scrollbar-thumb-color: #d3d3d3;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  color: var(--text-color);
+  background: var(--body-background-color);
+  font-size: 1.6rem;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
-.App-header {
-  background-color: #22201c;
+main {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
+  padding-bottom: 5rem;
+  transition: margin-left 0.3s;
 }
 
-.App-link {
-  color: #61dafb;
+div {
+  font-size: medium;
 }
 
-.brand-title {
-  font-size: 3rem;
-  color: #d9d9d9;
+/* override */
+
+::-ms-reveal {
+  display: none !important;
 }
 
-.brand-title span {
-  color: #ffde59;
+/* scrollbar */
+
+::-webkit-scrollbar {
+  height: 1rem;
+  width: 1rem;
 }
 
-.brand-description {
-  font-size: 1.4rem;
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  border: thick solid var(--body-background-color);
+  border-radius: 5rem;
 }
 
-.links {
-  display: flex;
+::-webkit-scrollbar-track {
+  background: var(--body-background-color);
 }
 
-.links a {
-  color: #d9d9d9;
-  font-size: 1.2rem;
-  margin: 1rem;
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+nav, aside, .icon  {
+  background-color: var(--navbar-background-color);
+}
+
+.icon, span {
+  color: var(--text-color);
 }

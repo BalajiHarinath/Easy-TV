@@ -1,0 +1,19 @@
+.main-videopage {
+  margin-top: 4.5rem;
+  margin-left: 16rem;
+}
+
+.btn-category {
+  background-color: var(--navbar-background-color);
+  color: var(--text-color);
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.btn-category:hover,
+.selected-category {
+  background-color: var(--primary-color);
+}
