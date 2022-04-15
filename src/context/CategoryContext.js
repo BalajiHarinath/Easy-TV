@@ -6,7 +6,7 @@ const CategoryContext = createContext(InitialSharedState);
 
 const CategoryProvider = ({ children }) => {
   const [state, dispatch] = useReducer(SharedReducer, InitialSharedState);
-  const { data: categoryData, loading: chipLoading, error: chipError } = state;
+  const { data: categoryData, loading: ischipLoading, error: chipError } = state;
 
   const [selectedCategory, setSelectedCategory] = useState("All");
 
@@ -18,6 +18,7 @@ const CategoryProvider = ({ children }) => {
         dispatch({ type: "SUCCESS", payload: response.data.categories });
       }
     } catch (error) {
+      dispatch({ type: "ERROR", payload: error });
       console.error(error);
     }
   };
@@ -27,7 +28,7 @@ const CategoryProvider = ({ children }) => {
       value={{
         getCategories,
         categoryData,
-        chipLoading,
+        ischipLoading,
         chipError,
         selectedCategory,
         setSelectedCategory,

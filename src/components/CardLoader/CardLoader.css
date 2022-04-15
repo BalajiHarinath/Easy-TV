@@ -41,12 +41,20 @@
   border-radius: 0.5rem;
 }
 
+/*Single Video Card Loader */
+.container-single-video-empty {
+  background-color: var(--navbar-background-color);
+  width: 100%;
+  height: 500px;
+}
+
 .container-img-thumbnail-card-empty,
 .img-profile-card-empty,
 .text-card-empty,
 .text-card-empty-short,
 .btn-vert-more-card-empty,
-.container-chip-empty {
+.container-chip-empty,
+.container-single-video-empty {
   background: linear-gradient(90deg, #3f3145 0%, #58465c 52%, #423145 99%);
   background-size: 200% 100%;
   animation: 1.5s shine linear infinite;

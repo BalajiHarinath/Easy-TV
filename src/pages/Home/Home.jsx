@@ -15,7 +15,7 @@ export const Home = () => {
   const {
     getCategories,
     categoryData,
-    chipLoading,
+    ischipLoading,
     chipError,
     selectedCategory,
     setSelectedCategory,
@@ -54,7 +54,7 @@ export const Home = () => {
         <h4>Categories</h4>
         <div className="spacer-1"></div>
         <div className="container-category flex flex-gap-2">
-          {!chipLoading
+          {!ischipLoading
             ? categoryData.map((item) => (
                 <Link
                   className="btn-category font-semibold"

@@ -1,0 +1,9 @@
+.main-single-video {
+  margin-top: 4.5rem;
+  margin-left: 16rem;
+}
+
+.container-single-video-page {
+  display: grid;
+  grid-template-columns: 0.7fr 0.3fr;
+}

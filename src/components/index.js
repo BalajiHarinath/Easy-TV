@@ -3,3 +3,8 @@ export { SidebarNav } from "./SidebarNav/SidebarNav";
 export { CardLoader } from "./CardLoader/CardLoader";
 export { CardVideo } from "./CardVideo/CardVideo";
 export { ChipLoader } from "./ChipLoader/ChipLoader";
+export { SingleVideoLoader } from "./SingleVideoLoader/SingleVideoLoader";
+export { SingleCardVideo } from "./SingleCardVideo/SingleCardVideo";
+export { CardWatchLater } from "./CardWatchLater/CardWatchLater";
+export { RestrictAuth } from "./RequireAuth/RestrictAuth";
+export { RequireAuth } from "./RequireAuth/RequireAuth";

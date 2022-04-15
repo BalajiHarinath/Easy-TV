@@ -13,7 +13,7 @@ export const VideoPage = () => {
   const {
     getCategories,
     categoryData,
-    chipLoading,
+    ischipLoading,
     chipError,
     selectedCategory,
     setSelectedCategory,
@@ -44,7 +44,7 @@ export const VideoPage = () => {
         <h4>Categories</h4>
         <div className="spacer-1"></div>
         <div className="container-category flex flex-gap-2">
-          {!chipLoading
+          {!ischipLoading
             ? categoryData.map((item) => (
                 <button
                   className={`${
@@ -65,11 +65,11 @@ export const VideoPage = () => {
         <div className="container-videos flex flex-wrap flex-gap-2">
           {!cardLoading
             ? filteredVideos.length > 0
-              ? filteredVideos.map((item) => (
-                  <CardVideo item={item} key={item._id} />
+              ? filteredVideos.map((item) => (         
+                    <CardVideo item={item}  key={item._id}/>              
                 ))
               : allVideos.map((item) => (
-                  <CardVideo item={item} key={item._id} />
+                    <CardVideo item={item}  key={item._id}/>
                 ))
             : new Array(12).fill().map((_, id) => <CardLoader key={id} />)}
         </div>

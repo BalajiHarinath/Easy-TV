@@ -1,6 +1,6 @@
 import "../../css/main.css";
 import "./SidebarNav.css";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { SidebarNavData } from "./SidebarNavData";
 
 export const SidebarNav = () => {
@@ -11,7 +11,6 @@ export const SidebarNav = () => {
           return (
               <li key={_id}>
                 <NavLink
-                    exact
                     className={({isActive}) => isActive ? " item-sidebar flex flex-align-center pd-1 item-sidebar-active": "item-sidebar flex flex-align-center pd-1"}             
                     to={link}           
                     >

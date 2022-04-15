@@ -33,7 +33,7 @@ export const SidebarNavData = [
     _id: uuid(),
     name: "Watch Later",
     icon: "watch_later",
-    link: "./fdbf",
+    link: "/watchlater",
   },
 
   {
