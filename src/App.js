@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { HeaderNav, SidebarNav } from "./components";
-import { Home, VideoPage } from "./pages";
+import { HeaderNav, SidebarNav, RequireAuth, RestrictAuth } from "./components";
+import { Home, VideoPage, SingleVideo, SignUp, Login, WatchLater } from "./pages";
 
 function App() {
   return (
@@ -11,7 +11,15 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/videos" element={<VideoPage />} />
-      </Routes>
+        <Route path="/singlevideo/:videoId" element={<SingleVideo />} />
+        <Route element={<RestrictAuth />}>
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
+        <Route element={<RequireAuth />}>
+          <Route path="/watchlater" element={<WatchLater />} /> 
+        </Route>
+      </Routes> 
     </div>
   );
 }

@@ -36,6 +36,13 @@
   border-radius: 50%;
 }
 
+.title-card-video {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
 .btn-more-vert-card {
   height: 2rem;
   width: 2rem;

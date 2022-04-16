@@ -10,7 +10,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "Map, Filter and Reduce",
-    url: "https://www.youtube.com/watch?v=zdp0zrpKzIE&t=1957s",
+    url: "zdp0zrpKzIE",
     thumbnail: {
       altTxt: "Map, Filter and Reduce",
       url: "https://i.ytimg.com/vi/zdp0zrpKzIE/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBwoOnC1M5t9L9FxkDB7w1y6Huq9g",
@@ -35,7 +35,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "Higher Order Functions",
-    url: "https://www.youtube.com/watch?v=HkWxvB1RJq0",
+    url: "HkWxvB1RJq0",
     thumbnail: {
       altTxt: "Higher Order Functions",
       url: "https://i.ytimg.com/vi/HkWxvB1RJq0/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDIWWWNSGzYh2J8RjXXXiRPjWf5Og",
@@ -60,7 +60,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "Set Timeout() | Decoded",
-    url: "https://www.youtube.com/watch?v=nqsPmuicJJc&t=21s",
+    url: "nqsPmuicJJc",
     thumbnail: {
       altTxt: "Set Timeout() | Decoded",
       url: "https://i.ytimg.com/vi/nqsPmuicJJc/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBxFFI5HQKMT7IN04ARDi550XZkdQ",
@@ -85,7 +85,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "Asynchronous Javascript and Event Loop",
-    url: "https://www.youtube.com/watch?v=8zKuNo4ay8E",
+    url: "8zKuNo4ay8E",
     thumbnail: {
       altTxt: "Asynchronous Javascript and Event Loop",
       url: "https://i.ytimg.com/vi/8zKuNo4ay8E/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA3H5Z79o1dIpMm215mAgGUSdE1WA",
@@ -111,7 +111,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "Learn HTML from scratch | Simplilearn",
-    url: "https://www.youtube.com/watch?v=MDLn5-zSQQI",
+    url: "MDLn5-zSQQI",
     thumbnail: {
       altTxt: "Learn HTML from scratch | Simplilearn",
       url: "https://i.ytimg.com/vi/MDLn5-zSQQI/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAYNFziKueIAxXDOWAVUO1rN80HNA",
@@ -136,7 +136,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "HTML Zero to Hero | Mosh",
-    url: "https://www.youtube.com/watch?v=qz0aGYrrlhU",
+    url: "qz0aGYrrlhU",
     thumbnail: {
       altTxt: "HTML Zero to Hero | Mosh",
       url: "https://i.ytimg.com/vi/qz0aGYrrlhU/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD2atY5v7B_RiGRNjykbLKft3eyVw",
@@ -161,7 +161,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "Basics of HTML | Edureka",
-    url: "https://www.youtube.com/watch?v=88PXJAA6szs",
+    url: "88PXJAA6szs",
     thumbnail: {
       altTxt: "Basics of HTML | Edureka",
       url: "https://i.ytimg.com/vi/88PXJAA6szs/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCgi6ehtM6up-KxDcBqY0mTYwZKjQ",
@@ -186,7 +186,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "HTML Tutorial - Website Crash Course for Beginners",
-    url: "https://www.youtube.com/watch?v=916GWv2Qs08",
+    url: "916GWv2Qs08",
     thumbnail: {
       altTxt: "HTML Tutorial - Website Crash Course for Beginners",
       url: "https://i.ytimg.com/vi/916GWv2Qs08/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCDIRe-izQb5XmVpwM9y3k7kAHzRg",
@@ -212,7 +212,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "Learn CSS basics in a simplified way | WDS",
-    url: "https://www.youtube.com/watch?v=1PnVor36_40",
+    url: "1PnVor36_40",
     thumbnail: {
       altTxt: "Learn CSS basics in a simplified way | WDS",
       url: "https://tpc.googlesyndication.com/simgad/4931567278696975789",
@@ -237,7 +237,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "CSS Tutorial - Zero to Hero | For beginners",
-    url: "https://www.youtube.com/watch?v=r1xBCi5SOjw",
+    url: "r1xBCi5SOjw",
     thumbnail: {
       altTxt: "CSS Tutorial - Zero to Hero | For beginners",
       url: "https://i.ytimg.com/vi/1Rs2ND1ryYc/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDCEhBJOuSZooep7mbF4mBmkVDZAg",
@@ -263,7 +263,7 @@ export const videos = [
     _id: uuid(),
     title:
       "What is CSS | CSS Explained For Beginners | Web Development Tutorial | Edureka",
-    url: "https://www.youtube.com/watch?v=6vbgZnQrpbU",
+    url: "6vbgZnQrpbU",
     thumbnail: {
       altTxt:
         "What is CSS | CSS Explained For Beginners | Web Development Tutorial | Edureka",
@@ -289,7 +289,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "How Do We Include CSS In Our HTML | Basics Of CSS",
-    url: "https://www.youtube.com/watch?v=F_feF3-NGtQ",
+    url: "F_feF3-NGtQ",
     thumbnail: {
       altTxt: "How Do We Include CSS In Our HTML | Basics Of CSS",
       url: "https://i.ytimg.com/vi/F_feF3-NGtQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAV0dgRQZwYxY0nua54e50SVejilQ",
@@ -315,7 +315,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "A High Level Overview of React",
-    url: "https://www.youtube.com/watch?v=FRjlF74_EZk",
+    url: "FRjlF74_EZk",
     thumbnail: {
       altTxt: "A High Level Overview of React",
       url: "https://i.ytimg.com/vi/FRjlF74_EZk/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAhx1FH4E3YsMCWHRIitlFM8HqHuQ",
@@ -340,7 +340,7 @@ export const videos = [
     _id: uuid(),
     title:
       "What Is ReactJS? | ReactJS Basics | Learn ReactJS | ReactJS Tutorial For Beginners",
-    url: "https://www.youtube.com/watch?v=Y6aYx_KKM7A",
+    url: "Y6aYx_KKM7A",
     thumbnail: {
       altTxt:
         "What Is ReactJS? | ReactJS Basics | Learn ReactJS | ReactJS Tutorial For Beginners",
@@ -366,7 +366,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "Absolute Basics of React | Edureka",
-    url: "https://www.youtube.com/watch?v=iwdBLit85TM",
+    url: "iwdBLit85TM",
     thumbnail: {
       altTxt: "Absolute Basics of React | Edureka",
       url: "https://i.ytimg.com/vi/iwdBLit85TM/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLB7i88IEss45hgHE5sOOI9j0Kthbw",
@@ -391,7 +391,7 @@ export const videos = [
   {
     _id: uuid(),
     title: "Introducing React Hooks | Traversy Media",
-    url: "https://www.youtube.com/watch?v=mxK8b99iJTg",
+    url: "mxK8b99iJTg",
     thumbnail: {
       altTxt: "Introducing React Hooks | Traversy Media",
       url: "https://i.ytimg.com/vi/mxK8b99iJTg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLADG_4v3JtUaPr-BD8Qxw2lroMgOw",
