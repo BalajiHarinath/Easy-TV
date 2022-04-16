@@ -28,8 +28,7 @@ export const SingleVideo = () => {
   }, [videoId]);
 
   useEffect(() => {
-    let tempVideos = [...allVideos];
-    tempVideos = tempVideos.filter(
+    let tempVideos = [...allVideos].filter(
       (video) =>
         video.category === singleVideo.category && video._id !== singleVideo._id
     );
