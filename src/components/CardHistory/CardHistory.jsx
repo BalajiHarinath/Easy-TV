@@ -1,20 +1,15 @@
 import "../../css/main.css";
-import "./CardVideo.css";
+import "../CardVideo/CardVideo.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useWatchLater, useHistory } from "../../context";
+import { useHistory } from "../../context";
 
-export const CardVideo = ({ item }) => {
+export const CardHistory = ({ item }) => {
   const [isPlay, setIsPlay] = useState(false);
   const [isMoreOptions, setIsMoreOptions] = useState(false);
   const { _id, title, thumbnail, channel, profile, views, playbackTime } = item;
-  const {
-    getWatchLaterVideos,
-    removeItemFromWatchLater,
-    addItemToWatchLater,
-    watchLaterVideos,
-  } = useWatchLater();
-  const { addVideoToHistory } = useHistory();
+
+  const { removeVideoFromHistory } = useHistory();
 
   useEffect(() => {
     const clickHandler = () => {
@@ -27,10 +22,6 @@ export const CardVideo = ({ item }) => {
     return () => document.removeEventListener("click", clickHandler);
   }, [isMoreOptions]);
 
-  useEffect(() => {
-    getWatchLaterVideos();
-  }, []);
-
   return (
     <div className="container-card flex flex-column flex-gap-0-5">
       <Link
@@ -38,7 +29,6 @@ export const CardVideo = ({ item }) => {
         onMouseLeave={() => setIsPlay(false)}
         onMouseEnter={() => setIsPlay(true)}
         to={`/singlevideo/${item._id}`}
-        onClick={() => addVideoToHistory(item)}
       >
         <img
           className="img-thumbnail-card"
@@ -93,36 +83,14 @@ export const CardVideo = ({ item }) => {
           }`}
         >
           <ul className="list-style-none pd-0-5">
-            {watchLaterVideos.some((item) => item._id === _id) ? (
-              <li
-                className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => removeItemFromWatchLater(_id)}
-              >
-                <span className="material-icons-outlined icon btn-transparent pdr-0-5">
-                  watch_later
-                </span>
-                <div className="btn-transparent text-sm">
-                  Remove from Watch Later
-                </div>
-              </li>
-            ) : (
-              <li
-                className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => addItemToWatchLater(item)}
-              >
-                <span className="material-icons-outlined icon btn-transparent pdr-0-5">
-                  watch_later
-                </span>
-                <div className="btn-transparent text-sm">
-                  Add to Watch Later
-                </div>
-              </li>
-            )}
-            <li className="item-container-overlay-text-video-card flex flex-align-center">
-              <span className="material-icons-round icon btn-transparent pdr-0-5">
-                playlist_add
+            <li
+              className="item-container-overlay-text-video-card flex flex-align-center"
+              onClick={() => removeVideoFromHistory(_id)}
+            >
+              <span className="material-icons icon btn-transparent pdr-0-5">
+                delete
               </span>
-              <div className="btn-transparent text-sm">Save to Playlist</div>
+              <div className="btn-transparent text-sm">Remove from History</div>
             </li>
           </ul>
         </div>

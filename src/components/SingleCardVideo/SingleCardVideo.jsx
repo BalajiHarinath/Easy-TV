@@ -1,7 +1,7 @@
 import "../../css/main.css";
 import "./SingleCardVideo.css";
 import { useEffect } from "react";
-import { useWatchLater } from "../../context";
+import { useWatchLater, useLikedVideo } from "../../context";
 
 export const SingleCardVideo = ({ singleVideo }) => {
   const {
@@ -10,8 +10,16 @@ export const SingleCardVideo = ({ singleVideo }) => {
     addItemToWatchLater,
     watchLaterVideos,
   } = useWatchLater();
+
+  const {
+    getLikedVideos,
+    addItemToLikedVideos,
+    removeItemFromLikedVideos,
+    LikedVideos,
+  } = useLikedVideo();
   useEffect(() => {
     getWatchLaterVideos();
+    getLikedVideos();
   }, []);
 
   return (
@@ -46,12 +54,27 @@ export const SingleCardVideo = ({ singleVideo }) => {
             <span className="pdl-1">{singleVideo.channel}</span>
           </div>
           <div className="container-btn-single-video flex flex-gap-1">
-            <button className="btn-single-video font-semibold flex flex-align-center cursor-pointer">
-              <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">
-                favorite
-              </span>
-              Like
-            </button>
+            {LikedVideos.some((item) => item._id === singleVideo._id) ? (
+              <button
+                className="btn-single-video btn-single-video-active font-semibold flex flex-align-center cursor-pointer"
+                onClick={() => removeItemFromLikedVideos(singleVideo._id)}
+              >
+                <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">
+                  favorite
+                </span>
+                Remove from Liked Videos
+              </button>
+            ) : (
+              <button
+                className="btn-single-video font-semibold flex flex-align-center cursor-pointer"
+                onClick={() => addItemToLikedVideos(singleVideo)}
+              >
+                <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">
+                  favorite
+                </span>
+                Like
+              </button>
+            )}
 
             {watchLaterVideos.some((item) => item._id === singleVideo._id) ? (
               <button
