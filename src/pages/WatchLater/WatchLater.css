@@ -13,18 +13,4 @@
   max-height: 30rem;
 }
 
-.btn-container-watch-later {
-  width: 100%;
-  max-height: 30rem;
-  position: absolute;
-  top: 50%;
-  left: 40%;
-}
 
-.btn-goto-videos-watch-later {
-  background-color: var(--navbar-background-color);
-  color: var(--text-color-dark);
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-}

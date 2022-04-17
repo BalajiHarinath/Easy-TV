@@ -58,14 +58,6 @@ export const History = () => {
               alt="Watch-later-empty-img"
               loading="lazy"
             />
-            <div className="btn-container-liked-video-page">
-              <Link
-                className="btn-goto-videos-liked-video-page cursor-pointer"
-                to="/videos"
-              >
-                Goto Videos
-              </Link>
-            </div>
           </div>
         )}
       </div>

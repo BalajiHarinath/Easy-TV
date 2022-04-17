@@ -60,14 +60,6 @@ export const WatchLater = () => {
               alt="Watch-later-empty-img"
               loading="lazy"
             />
-            <div className="btn-container-watch-later">
-              <Link
-                className="btn-goto-videos-watch-later cursor-pointer"
-                to="/videos"
-              >
-                Goto Videos
-              </Link>
-            </div>
           </div>
         )}
       </div>
