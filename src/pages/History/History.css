@@ -1,0 +1,21 @@
+.main-history {
+  margin-top: 4.5rem;
+  margin-left: 16rem;
+}
+
+.btn-clear-all {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--navbar-background-color);
+  color: var(--text-color);
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.btn-clear-all:hover {
+  background-color: var(--primary-color);
+}

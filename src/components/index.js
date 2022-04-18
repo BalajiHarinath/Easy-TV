@@ -6,5 +6,7 @@ export { ChipLoader } from "./ChipLoader/ChipLoader";
 export { SingleVideoLoader } from "./SingleVideoLoader/SingleVideoLoader";
 export { SingleCardVideo } from "./SingleCardVideo/SingleCardVideo";
 export { CardWatchLater } from "./CardWatchLater/CardWatchLater";
+export { CardLikedVideo } from "./CardLikedVideo/CardLikedVideo";
+export { CardHistory } from "./CardHistory/CardHistory";
 export { RestrictAuth } from "./RequireAuth/RestrictAuth";
 export { RequireAuth } from "./RequireAuth/RequireAuth";

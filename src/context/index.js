@@ -3,3 +3,5 @@ export { CategoryProvider, useCategory } from "./CategoryContext";
 export { SingleVideoProvider, useSingleVideo } from "./SingleVideoContext";
 export { WatchLaterProvider, useWatchLater } from "./WatchLaterContext";
 export { AuthProvider, useAuth } from "./AuthContext";
+export { LikedVideoProvider, useLikedVideo } from "./LikedVideoContext";
+export { HistoryProvider, useHistory } from "./HistoryContext";

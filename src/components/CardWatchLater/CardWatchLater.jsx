@@ -2,18 +2,15 @@ import "../../css/main.css";
 import "../CardVideo/CardVideo.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useWatchLater } from "../../context";
+import { useLikedVideo, useWatchLater, useHistory } from "../../context";
 
-export const CardWatchLater = ({ item }) => {
+export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
   const [isPlay, setIsPlay] = useState(false);
   const [isMoreOptions, setIsMoreOptions] = useState(false);
   const { _id, title, thumbnail, channel, profile, views, playbackTime } = item;
-  const {
-    getWatchLaterVideos,
-    removeItemFromWatchLater,
-    addItemToWatchLater,
-    watchLaterVideos,
-  } = useWatchLater();
+  const { removeItemFromWatchLater, addItemToWatchLater } = useWatchLater();
+  const { addItemToLikedVideos, removeItemFromLikedVideos } = useLikedVideo();
+  const { addVideoToHistory } = useHistory();
 
   useEffect(() => {
     const clickHandler = () => {
@@ -33,6 +30,7 @@ export const CardWatchLater = ({ item }) => {
         onMouseLeave={() => setIsPlay(false)}
         onMouseEnter={() => setIsPlay(true)}
         to={`/singlevideo/${item._id}`}
+        onClick={() => addVideoToHistory(item)}
       >
         <img
           className="img-thumbnail-card"
@@ -87,17 +85,55 @@ export const CardWatchLater = ({ item }) => {
           }`}
         >
           <ul className="list-style-none pd-0-5">
-            <li
-              className="item-container-overlay-text-video-card flex flex-align-center"
-              onClick={() => removeItemFromWatchLater(_id)}
-            >
-              <span className="material-icons-outlined icon btn-transparent pdr-0-5">
-                watch_later
-              </span>
-              <div className="btn-transparent text-sm">
-                Remove From Watch Later
-              </div>
-            </li>
+            {watchLaterVideos.length > 0 &&
+            watchLaterVideos.some((item) => item._id === _id) ? (
+              <li
+                className="item-container-overlay-text-video-card flex flex-align-center"
+                onClick={() => removeItemFromWatchLater(_id)}
+              >
+                <span className="material-icons icon btn-transparent pdr-0-5">
+                  watch_later
+                </span>
+                <div className="btn-transparent text-sm">
+                  Remove From Watch Later
+                </div>
+              </li>
+            ) : (
+              <li
+                className="item-container-overlay-text-video-card flex flex-align-center"
+                onClick={() => addItemToWatchLater(item)}
+              >
+                <span className="material-icons-outlined icon btn-transparent pdr-0-5">
+                  watch_later
+                </span>
+                <div className="btn-transparent text-sm">
+                  Add to Watch Later
+                </div>
+              </li>
+            )}
+
+            {LikedVideos.length > 0 &&
+            LikedVideos.some((item) => item._id === _id) ? (
+              <li
+                className="item-container-overlay-text-video-card flex flex-align-center"
+                onClick={() => removeItemFromLikedVideos(_id)}
+              >
+                <span className="material-icons-outlined icon btn-transparent pdr-0-5">
+                  favorite
+                </span>
+                <div className="btn-transparent text-sm">Remove from Liked</div>
+              </li>
+            ) : (
+              <li
+                className="item-container-overlay-text-video-card flex flex-align-center"
+                onClick={() => addItemToLikedVideos(item)}
+              >
+                <span className="material-icons-outlined icon btn-transparent pdr-0-5">
+                  favorite_border
+                </span>
+                <div className="btn-transparent text-sm">Add To liked</div>
+              </li>
+            )}
             <li className="item-container-overlay-text-video-card flex flex-align-center">
               <span className="material-icons-round icon btn-transparent pdr-0-5">
                 playlist_add

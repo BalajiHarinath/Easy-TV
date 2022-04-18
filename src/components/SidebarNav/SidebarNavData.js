@@ -26,7 +26,7 @@ export const SidebarNavData = [
     _id: uuid(),
     name: "Liked",
     icon: "favorite",
-    link: "./fdbf",
+    link: "/liked",
   },
 
   {
@@ -40,6 +40,6 @@ export const SidebarNavData = [
     _id: uuid(),
     name: "History",
     icon: "history",
-    link: "./adscad",
+    link: "/history",
   },
 ];
