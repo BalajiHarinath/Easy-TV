@@ -1,12 +1,14 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import { AuthReducer, InitialAuthData } from "../utils";
+import { useToast } from "./ToastContext";
 
 const AuthContext = createContext(InitialAuthData);
 
 const AuthProvider = ({ children }) => {
   const [authState, authDispatch] = useReducer(AuthReducer, InitialAuthData);
   const { authData, authErrorMsg } = authState;
+  const { addToast } = useToast();
 
   useEffect(() => {
     if (authErrorMsg) {
@@ -29,6 +31,7 @@ const AuthProvider = ({ children }) => {
       if (response.status === 201) {
         localStorage.setItem("videoToken", response.data.encodedToken);
         authDispatch({ type: "SIGN_UP", payload: response.data.createdUser });
+        addToast({ status: "added", msg: "Signed Up" });
       }
     } catch (error) {
       console.error(error);
@@ -50,6 +53,7 @@ const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         localStorage.setItem("videoToken", response.data.encodedToken);
         authDispatch({ type: "LOGIN", payload: response.data.foundUser });
+        addToast({ status: "added", msg: "Logged in" });
       }
     } catch (error) {
       console.error(error.response);
@@ -76,6 +80,7 @@ const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         localStorage.setItem("videoToken", response.data.encodedToken);
         authDispatch({ type: "LOGIN", payload: response.data.foundUser });
+        addToast({ status: "added", msg: "Logged in" });
       }
     } catch (error) {
       console.error(error.response);
@@ -96,6 +101,7 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     authDispatch({ type: "LOGOUT", payload: "" });
     localStorage.clear();
+    addToast({ status: "removed", msg: "Logged out" });
   };
 
   return (

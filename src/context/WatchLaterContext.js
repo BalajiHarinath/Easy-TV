@@ -1,6 +1,7 @@
 import { useContext, createContext, useReducer } from "react";
 import axios from "axios";
 import { SharedReducer, InitialSharedState } from "../utils";
+import { useToast } from "./ToastContext";
 
 const WatchLaterContext = createContext(InitialSharedState);
 
@@ -17,6 +18,8 @@ const WatchLaterProvider = ({ children }) => {
       authorization: localStorage.getItem("videoToken"),
     },
   };
+
+  const { addToast } = useToast();
 
   const getWatchLaterVideos = async () => {
     dispatch({ type: "LOADING" });
@@ -41,6 +44,7 @@ const WatchLaterProvider = ({ children }) => {
       );
       if (response.status === 201) {
         dispatch({ type: "SUCCESS", payload: response.data.watchlater });
+        addToast({ status: "added", msg: "Added to watch later" });
       }
     } catch (error) {
       dispatch({ type: "ERROR", payload: error });
@@ -57,6 +61,7 @@ const WatchLaterProvider = ({ children }) => {
       );
       if (response.status === 200) {
         dispatch({ type: "SUCCESS", payload: response.data.watchlater });
+        addToast({ status: "removed", msg: "Removed from watch later" });
       }
     } catch (error) {
       dispatch({ type: "ERROR", payload: error });

@@ -1,16 +1,48 @@
 import "../../css/main.css";
 import "../CardVideo/CardVideo.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useLikedVideo, useWatchLater, useHistory } from "../../context";
+import {
+  useLikedVideo,
+  useWatchLater,
+  useHistory,
+  usePlaylist,
+} from "../../context";
+import { CardVideoPlaylist } from "../CardVideo/CardVideoPlaylist";
+import { ChipLoader } from "../index";
 
 export const CardLikedVideo = ({ item, watchLaterVideos, LikedVideos }) => {
   const [isPlay, setIsPlay] = useState(false);
   const [isMoreOptions, setIsMoreOptions] = useState(false);
+  const [isSavetoPlaylistClicked, setIsSavetoPlaylistClicked] = useState(false);
+  const [clickedCreateNewPlaylist, setClickedCreateNewPlaylist] =
+    useState(false);
   const { _id, title, thumbnail, channel, profile, views, playbackTime } = item;
   const { removeItemFromWatchLater, addItemToWatchLater } = useWatchLater();
   const { addItemToLikedVideos, removeItemFromLikedVideos } = useLikedVideo();
   const { addVideoToHistory } = useHistory();
+
+  const [playlistDetails, setPlaylistDetails] = useState({
+    title: "",
+    description: "",
+    image: {
+      src: "",
+      alt: "",
+    },
+    isInputError: false,
+  });
+
+  const { getAllPlaylists, addNewPlaylist, playlistState } = usePlaylist();
+
+  const ref = useRef(null);
+
+  const {
+    addNewplaylistLoading,
+    addVideoToplaylistLoading,
+    removeVideoFromPlaylistLoading,
+    playlists,
+    playlistError,
+  } = playlistState;
 
   useEffect(() => {
     const clickHandler = () => {
@@ -22,6 +54,46 @@ export const CardLikedVideo = ({ item, watchLaterVideos, LikedVideos }) => {
 
     return () => document.removeEventListener("click", clickHandler);
   }, [isMoreOptions]);
+
+  useEffect(() => {
+    const clickHandler = (event) => {
+      if (
+        isSavetoPlaylistClicked &&
+        ref.current &&
+        !ref.current.contains(event.target)
+      ) {
+        setIsSavetoPlaylistClicked(false);
+      }
+    };
+    document.addEventListener("click", clickHandler);
+
+    return () => document.removeEventListener("click", clickHandler);
+  }, [isSavetoPlaylistClicked]);
+
+  useEffect(() => {
+    getAllPlaylists();
+  }, [
+    clickedCreateNewPlaylist,
+    addVideoToplaylistLoading,
+    removeVideoFromPlaylistLoading,
+  ]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setPlaylistDetails({ ...playlistDetails, isInputError: false });
+    }, 2000);
+  }, [playlistDetails.isInputError]);
+
+  const createPlaylistClickHandler = () => {
+    if (playlistDetails.title === "") {
+      setPlaylistDetails({ ...playlistDetails, isInputError: true });
+    } else {
+      setClickedCreateNewPlaylist(false);
+      addNewPlaylist(playlistDetails);
+      playlistDetails.title = "";
+    }
+    setIsSavetoPlaylistClicked(true);
+  };
 
   return (
     <div className="container-card flex flex-column flex-gap-0-5">
@@ -135,13 +207,109 @@ export const CardLikedVideo = ({ item, watchLaterVideos, LikedVideos }) => {
               </li>
             )}
 
-            <li className="item-container-overlay-text-video-card flex flex-align-center">
+            <li
+              className="item-container-overlay-text-video-card flex flex-align-center"
+              onClick={() => {
+                setIsSavetoPlaylistClicked(true);
+                setIsMoreOptions(false);
+              }}
+            >
               <span className="material-icons-round icon btn-transparent pdr-0-5">
                 playlist_add
               </span>
               <div className="btn-transparent text-sm">Save to Playlist</div>
             </li>
           </ul>
+        </div>
+
+        {/* playlist div */}
+        <div
+          className={`${
+            isSavetoPlaylistClicked
+              ? "container-playlist-video-card flex flex-column flex-gap-1"
+              : "display-none"
+          }`}
+          ref={ref}
+        >
+          <div className="flex flex-justify-space-between flex-align-center">
+            <span className="font-semibold">Save to...</span>
+            <span
+              className="material-icons-round icon btn-transparent"
+              onClick={() => setIsSavetoPlaylistClicked(false)}
+            >
+              clear
+            </span>
+          </div>
+
+          <div className="flex flex-column flex-gap-1">
+            {addNewplaylistLoading ||
+            addVideoToplaylistLoading ||
+            removeVideoFromPlaylistLoading
+              ? new Array(3).fill().map((_, id) => <ChipLoader key={id} />)
+              : playlists.length > 0 &&
+                playlists.map((playlist) => {
+                  return (
+                    <CardVideoPlaylist
+                      playlist={playlist}
+                      item={item}
+                      key={playlist._id}
+                    />
+                  );
+                })}
+          </div>
+
+          <div
+            className="btn-transparent flex flex-justify-space-between flex-align-center text-sm font-semibold"
+            onClick={() => {
+              setClickedCreateNewPlaylist(true);
+              setIsSavetoPlaylistClicked(true);
+            }}
+          >
+            <span className="material-icons-round icon  pdr-0-5">add</span>
+            Create new Playlist
+          </div>
+
+          <div
+            className={`${
+              clickedCreateNewPlaylist
+                ? "flex flex-column flex-gap-0-5"
+                : "display-none"
+            }`}
+          >
+            <input
+              className="input-playlist-video-card"
+              autoFocus
+              type="text"
+              placeholder="Playlist name..."
+              value={playlistDetails.title}
+              onChange={(e) => {
+                setPlaylistDetails({
+                  ...playlistDetails,
+                  title: e.target.value,
+                });
+                setIsSavetoPlaylistClicked(true);
+              }}
+            />
+            {playlistDetails.isInputError && (
+              <div className="input-playlist-video-card-error text-sm">
+                Empty Input
+              </div>
+            )}
+            <div className="flex flex-justify-space-between">
+              <button
+                className="btn-create-playlist-video-card"
+                onClick={() => setClickedCreateNewPlaylist(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="btn-create-playlist-video-card"
+                onClick={() => createPlaylistClickHandler()}
+              >
+                Create
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
