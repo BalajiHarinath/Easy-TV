@@ -20,7 +20,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    background-color: #85828280;
+    background-color: var(--playlist-card-overlay-background-color)
 }
 
 .btn-view-playlist {
@@ -34,4 +34,14 @@
 .disable-link {
     pointer-events: none;
     cursor: default;
+}
+
+.container-btn-playlist-card {
+    position: relative;
+}
+
+.btn-remove-playlist {
+    position: absolute;
+    top: 0;
+    right: 0;
 }

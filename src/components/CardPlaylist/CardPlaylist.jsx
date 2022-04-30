@@ -2,10 +2,13 @@ import "../../css/main.css";
 import "./CardPlaylist.css";
 import { Link } from "react-router-dom";
 import { PlaylistEmptyImage } from "../../Assets/index";
-import { useHistory } from "../../context";
+import { useHistory, usePlaylist } from "../../context";
 
 export const CardPlaylist = ({ playlist }) => {
   const { addVideoToHistory } = useHistory();
+  const { removePlaylist } = usePlaylist();
+//   const { playlistLoading, playlists, playlistError, removeplaylistLoading } =
+//     playlistState;
 
   if (playlist?.videos?.length !== 0) {
     var src = playlist.videos[0].thumbnail.url;
@@ -44,7 +47,7 @@ export const CardPlaylist = ({ playlist }) => {
             </span>
           </div>
         </Link>
-        <div className="flex flex-column">
+        <div className="container-btn-playlist-card flex flex-column">
           <div className="font-semibold">{playlist.title}</div>
           <Link
             className="btn-view-playlist text-base btn-transparent pdt-0-5"
@@ -52,6 +55,12 @@ export const CardPlaylist = ({ playlist }) => {
           >
             View Playlist
           </Link>
+          <button className="btn-remove-playlist btn-transparent"
+            onClick={() => removePlaylist(playlist?._id)}>
+            <span className="material-icons icon btn-transparent pdr-0-5">
+                  delete
+                </span>
+          </button>
         </div>
       </div>
     </div>
