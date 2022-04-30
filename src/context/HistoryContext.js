@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
 import { SharedReducer, InitialSharedState } from "../utils";
 import axios from "axios";
+import { useToast } from "./ToastContext";
 
 const HistoryContext = createContext(InitialSharedState);
 
@@ -17,6 +18,8 @@ const HistoryProvider = ({ children }) => {
       authorization: localStorage.getItem("videoToken"),
     },
   };
+
+  const { addToast } = useToast();
 
   const getHistoryVideos = async () => {
     try {
@@ -50,6 +53,7 @@ const HistoryProvider = ({ children }) => {
       const response = await axios.delete(`api/user/history/${_id}`, config);
       if (response.status === 200) {
         dispatch({ type: "SUCCESS", payload: response.data.history });
+        addToast({ status: "removed", msg: "Removed from history" });
       }
     } catch (error) {
       console.error(error);
@@ -62,6 +66,7 @@ const HistoryProvider = ({ children }) => {
       const response = await axios.delete("/api/user/history/all", config);
       if (response.status === 200) {
         dispatch({ type: "SUCCESS", payload: response.data.history });
+        addToast({ status: "removed", msg: "History cleared" });
       }
     } catch (error) {
       console.error(error);

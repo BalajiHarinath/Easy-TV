@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
 import axios from "axios";
 import { SharedReducer, InitialSharedState } from "../utils";
+import { useToast } from "./ToastContext";
 
 const LikedVideoContext = createContext(InitialSharedState);
 
@@ -17,6 +18,8 @@ const LikedVideoProvider = ({ children }) => {
       authorization: localStorage.getItem("videoToken"),
     },
   };
+
+  const { addToast } = useToast();
 
   const getLikedVideos = async () => {
     try {
@@ -36,6 +39,7 @@ const LikedVideoProvider = ({ children }) => {
       const response = await axios.post("/api/user/likes", { video }, config);
       if (response.status === 201) {
         dispatch({ type: "SUCCESS", payload: response.data.likes });
+        addToast({ status: "added", msg: "Added to liked videos" });
       }
     } catch (error) {
       console.error(error);
@@ -48,6 +52,7 @@ const LikedVideoProvider = ({ children }) => {
       const response = await axios.delete(`/api/user/likes/${_id}`, config);
       if (response.status === 200) {
         dispatch({ type: "SUCCESS", payload: response.data.likes });
+        addToast({ status: "removed", msg: "Removed from liked videos" });
       }
     } catch (error) {
       console.error(error);

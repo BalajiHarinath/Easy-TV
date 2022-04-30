@@ -34,11 +34,16 @@
 }
 
 /*Chip Loader */
-.container-chip-empty {
+.container-chip-empty,
+.container-header-empty {
   background-color: var(--navbar-background-color);
   width: 5rem;
   height: 2rem;
   border-radius: 0.5rem;
+}
+
+.container-header-empty {
+  width: 8rem;
 }
 
 /*Single Video Card Loader */
@@ -54,6 +59,7 @@
 .text-card-empty-short,
 .btn-vert-more-card-empty,
 .container-chip-empty,
+.container-header-empty,
 .container-single-video-empty {
   background: linear-gradient(90deg, #3f3145 0%, #58465c 52%, #423145 99%);
   background-size: 200% 100%;

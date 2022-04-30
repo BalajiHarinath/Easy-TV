@@ -80,6 +80,8 @@ export const Home = () => {
             ))
           : new Array(4).fill().map((_, id) => <CardLoader key={id} />)}
       </div>
+
+      <div className="spacer-4"></div>
     </main>
   );
 };

@@ -1,0 +1,25 @@
+.container-toast {
+  list-style: none;
+  position: fixed;
+  bottom: 2rem;
+  right: 0;
+}
+
+.text-toast {
+  margin-bottom: 0.7rem;
+  width: 18rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadow);
+  z-index: 4;
+  color: var(--white);
+  padding: 1rem 1rem;
+  align-items: center;
+}
+
+.added {
+  background-color: var(--green);
+}
+
+.removed {
+  background-color: var(--red);
+}

@@ -10,6 +10,10 @@ import {
   WatchLater,
   LikedVideos,
   History,
+  Playlist,
+  PlaylistDetails,
+  SingleVideoPlaylist,
+  Error,
 } from "./pages";
 
 function App() {
@@ -29,7 +33,11 @@ function App() {
           <Route path="/watchlater" element={<WatchLater />} />
           <Route path="/liked" element={<LikedVideos />} />
           <Route path="/history" element={<History />} />
+          <Route path="/playlist" element={<Playlist />} />
+          <Route path="/playlist/:playlistId" element={<PlaylistDetails />} exact/>
+          <Route path="/playlist/:singleplaylistId/:singlevideoId" element={<SingleVideoPlaylist />} exact/>
         </Route>
+        <Route path="*" element={<Error />} />
       </Routes>
     </div>
   );
