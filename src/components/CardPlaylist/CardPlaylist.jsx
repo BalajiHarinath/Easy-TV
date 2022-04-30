@@ -7,8 +7,8 @@ import { useHistory, usePlaylist } from "../../context";
 export const CardPlaylist = ({ playlist }) => {
   const { addVideoToHistory } = useHistory();
   const { removePlaylist } = usePlaylist();
-//   const { playlistLoading, playlists, playlistError, removeplaylistLoading } =
-//     playlistState;
+  //   const { playlistLoading, playlists, playlistError, removeplaylistLoading } =
+  //     playlistState;
 
   if (playlist?.videos?.length !== 0) {
     var src = playlist.videos[0].thumbnail.url;
@@ -55,11 +55,13 @@ export const CardPlaylist = ({ playlist }) => {
           >
             View Playlist
           </Link>
-          <button className="btn-remove-playlist btn-transparent"
-            onClick={() => removePlaylist(playlist?._id)}>
+          <button
+            className="btn-remove-playlist btn-transparent"
+            onClick={() => removePlaylist(playlist?._id)}
+          >
             <span className="material-icons icon btn-transparent pdr-0-5">
-                  delete
-                </span>
+              delete
+            </span>
           </button>
         </div>
       </div>
