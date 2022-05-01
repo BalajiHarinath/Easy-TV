@@ -22,7 +22,7 @@ const ToastProvider = ({ children }) => {
   return (
     <ToastContext.Provider value={{ addToast, removeToast }}>
       {children}
-      <ul className="flex flex-column container-toast">
+      <ul className="container-toast flex flex-column">
         {toasts.map((toast) => (
           <Toast
             key={toast._id}

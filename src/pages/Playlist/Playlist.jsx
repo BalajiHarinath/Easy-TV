@@ -22,19 +22,21 @@ export const Playlist = () => {
   return (
     <main className="main-playlist">
       {playlists.length > 0 ? (
-        <h4 className="pdl-3 pdt-3 font-semibold">
+        <h4 className="title-playlist-page font-semibold pdl-3 pdt-3">
           Playlists{" "}
-          <small className="text-base font-normal pdl-0-5">
+          <small className="videos-number-playlist-page text-base font-normal pdl-0-5">
             {playlists.length === 1
               ? "1 video"
               : `${playlists.length} playlists`}
           </small>
         </h4>
       ) : (
-        <h4 className="pdl-3 pdt-3 font-semibold">Playlists Empty</h4>
+        <h4 className="title-playlist-page font-semibold pdl-3 pdt-3">
+          Playlists Empty
+        </h4>
       )}
 
-      <div className="flex flex-wrap flex-gap-3 pd-3 pdt-1">
+      <div className="container-playlist-card flex flex-wrap flex-gap-3 pd-3 pdt-1">
         {playlistLoading ? (
           new Array(6).fill().map((_, id) => <CardLoader key={id} />)
         ) : playlists.length > 0 ? (

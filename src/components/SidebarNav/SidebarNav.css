@@ -15,3 +15,18 @@
 .item-sidebar-active {
   background-color: var(--navbar-active-color);
 }
+
+/*Media Queries*/
+@media screen and (max-width: 850px) {
+  .container-sidebar {
+    width: fit-content;
+  }
+
+  .icon-sidebar-small-screen {
+    padding: 0 0.3rem;
+  }
+
+  .text-sidebar-small-screen {
+    display: none;
+  }
+}

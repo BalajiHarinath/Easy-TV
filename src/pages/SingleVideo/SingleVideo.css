@@ -7,3 +7,26 @@
   display: grid;
   grid-template-columns: 0.7fr 0.3fr;
 }
+
+/*Media Queries*/
+@media screen and (max-width: 1450px) {
+  .container-single-video-page {
+    display: flex;
+  }
+
+  .section-related-videos {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .main-single-video {
+    margin-left: 4rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container-single-video-page {
+    padding: 0 0 1rem 0;
+  }
+}

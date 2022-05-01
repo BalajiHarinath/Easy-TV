@@ -2,3 +2,28 @@
   margin-top: 4.5rem;
   margin-left: 16rem;
 }
+
+/*Media Queries*/
+@media screen and (max-width: 850px) {
+  .main-playlist-details {
+    margin-left: 4rem;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .title-playlist-details-page,
+  .videos-number-playlist-details-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title-playlist-details-page {
+    padding-top: 5rem;
+  }
+
+  .container-playlist-details-card {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}

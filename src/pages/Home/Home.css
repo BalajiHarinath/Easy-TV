@@ -46,3 +46,41 @@
   border-radius: 0.5rem;
   cursor: pointer;
 }
+
+.container-category {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/*Media Queries*/
+@media screen and (max-width: 850px) {
+  .main-home {
+    margin-left: 4rem;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .container-hero {
+    display: none;
+  }
+
+  .btn-category {
+    font-size: 14px;
+  }
+
+  .spacer-small-screen-1 {
+    height: 1rem;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .title-must-watch-videos-home {
+    display: flex;
+    justify-content: center;
+  }
+
+  .container-must-watch-videos {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}

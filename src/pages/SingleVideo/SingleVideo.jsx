@@ -44,7 +44,7 @@ export const SingleVideo = () => {
           <SingleCardVideo singleVideo={singleVideo} />
         )}
 
-        <div className="ml-2 pdl-1 flex flex-column flex-gap-2 ">
+        <div className="section-related-videos ml-2 pdl-1 flex flex-column flex-gap-2 ">
           <h4>Related Videos</h4>
           <div className="container-related-videos flex flex-column flex-gap-2">
             {iscardLoading ? (

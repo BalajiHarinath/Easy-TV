@@ -28,19 +28,19 @@ export const WatchLater = () => {
   return (
     <main className="main-watchlater">
       {watchLaterVideos.length > 0 ? (
-        <h4 className="pdl-3 pdt-3 font-semibold">
+        <h4 className="title-watch-later font-semibold pdl-3 pdt-3">
           Watch Later{" "}
-          <small className="text-base font-normal pdl-0-5">
+          <small className="videos-number-title-watch-later text-base font-normal pdl-0-5">
             {watchLaterVideos.length === 1
               ? "1 video"
               : `${watchLaterVideos.length} videos`}
           </small>
         </h4>
       ) : (
-        <h4 className="pdl-3 pdt-3 font-semibold">Watch Later Empty</h4>
+        <h4 className="title-watch-later pdl-3 pdt-3">Watch Later Empty</h4>
       )}
 
-      <div className="flex flex-gap-3 flex-wrap pd-3 pdt-1">
+      <div className="container-videos-watchlater flex flex-gap-3 flex-wrap pd-3 pdt-1">
         {isWatchLaterVideoLoading ? (
           new Array(6).fill().map((_, id) => <CardLoader key={id} />)
         ) : watchLaterVideos.length > 0 ? (

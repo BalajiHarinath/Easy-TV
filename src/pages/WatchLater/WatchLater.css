@@ -13,4 +13,23 @@
   max-height: 30rem;
 }
 
+/*Media Queries*/
+@media screen and (max-width: 850px) {
+  .main-watchlater {
+    margin-left: 4rem;
+  }
+}
 
+@media screen and (max-width: 570px) {
+  .title-watch-later,
+  .videos-number-title-watch-later {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container-videos-watchlater {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}

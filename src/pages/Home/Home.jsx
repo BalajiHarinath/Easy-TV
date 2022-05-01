@@ -48,7 +48,7 @@ export const Home = () => {
         </div>
       </div>
 
-      <div className="spacer-3"></div>
+      <div className="spacer-3 spacer-small-screen-1"></div>
 
       <div className="flex flex-column">
         <h4>Categories</h4>
@@ -71,7 +71,7 @@ export const Home = () => {
 
       <div className="spacer-3"></div>
 
-      <h4>Must Watch Videos</h4>
+      <h4 className="title-must-watch-videos-home">Must Watch Videos</h4>
       <div className="spacer-1"></div>
       <div className="container-must-watch-videos flex flex-wrap flex-gap-2">
         {!cardLoading

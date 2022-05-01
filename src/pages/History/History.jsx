@@ -33,9 +33,9 @@ export const History = () => {
           >
             Clear All
           </button>
-          <h4 className="pdl-3 pdt-3 font-semibold">
+          <h4 className="title-history font-semibold pdl-3 pdt-3">
             History{" "}
-            <small className="text-base font-normal pdl-0-5">
+            <small className="videos-number-title-history text-base font-normal pdl-0-5">
               {HistoryData.length === 1
                 ? "1 video"
                 : `${HistoryData.length} videos`}
@@ -43,9 +43,11 @@ export const History = () => {
           </h4>
         </div>
       ) : (
-        <h4 className="pdl-3 pdt-3 font-semibold">History Empty</h4>
+        <h4 className="title-history font-semibold pdl-3 pdt-3">
+          History Empty
+        </h4>
       )}
-      <div className="flex flex-gap-3 flex-wrap pd-3 pdt-1">
+      <div className="container-videos-history flex flex-gap-3 flex-wrap pd-3 pdt-1">
         {isHistoryLoading ? (
           new Array(6).fill().map((_, id) => <CardLoader key={id} />)
         ) : HistoryData.length > 0 ? (

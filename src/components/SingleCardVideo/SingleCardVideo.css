@@ -20,3 +20,47 @@
 .container-related-videos {
   width: fit-content;
 }
+
+@media screen and (max-width: 750px) {
+  .iframe-single-card-video {
+    height: 400px;
+  }
+
+  .btn-single-video {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .iframe-single-card-video {
+    height: 300px;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .iframe-single-card-video {
+    height: 290px;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .iframe-single-card-video {
+    height: 270px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .iframe-single-card-video {
+    height: 240px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .iframe-single-card-video {
+    height: 220px;
+  }
+
+  .container-text-single-video-card {
+    padding: 2rem;
+  }
+}
