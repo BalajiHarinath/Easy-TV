@@ -11,12 +11,13 @@ export const Home = () => {
   useDocumentTitle("Easy TV | Home");
   useScrollToTop();
 
-  const { getAllVideos, allVideos, cardLoading, cardError } = useVideo();
+  const { getAllVideos, allVideos, cardLoading, iscardError, cardErrorData } = useVideo();
   const {
     getCategories,
     categoryData,
     ischipLoading,
-    chipError,
+    ischipError,
+    chipErrorData,
     selectedCategory,
     setSelectedCategory,
   } = useCategory();
@@ -54,7 +55,9 @@ export const Home = () => {
         <h4>Categories</h4>
         <div className="spacer-1"></div>
         <div className="container-category flex flex-gap-2">
-          {!ischipLoading
+          {/* {ischipError && <div>{chipErrorData}</div>} */}
+          {ischipError ? <div>{chipErrorData}</div>
+            :!ischipLoading
             ? categoryData.map((item) => (
                 <Link
                   className="btn-category font-semibold"
@@ -74,7 +77,9 @@ export const Home = () => {
       <h4 className="title-must-watch-videos-home">Must Watch Videos</h4>
       <div className="spacer-1"></div>
       <div className="container-must-watch-videos flex flex-wrap flex-gap-2">
-        {!cardLoading
+        {/* {iscardError && <div>{cardErrorData}</div>} */}
+        {iscardError ? <div>{cardErrorData}</div> 
+          :!cardLoading
           ? mustWatchVideos.map((item) => (
               <CardVideo item={item} key={item._id} />
             ))

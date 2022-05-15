@@ -1,7 +1,6 @@
 import "../../css/main.css";
 import "./History.css";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { PageEmptyImage } from "../../Assets/index";
 import { CardLoader, CardHistory } from "../../components";
 import { useHistory } from "../../context";
@@ -16,7 +15,8 @@ export const History = () => {
     clearHistory,
     HistoryData,
     isHistoryLoading,
-    HistoryError,
+    isHistoryError,
+    HistoryErrorData,
   } = useHistory();
 
   useEffect(() => {
@@ -48,7 +48,9 @@ export const History = () => {
         </h4>
       )}
       <div className="container-videos-history flex flex-gap-3 flex-wrap pd-3 pdt-1">
-        {isHistoryLoading ? (
+        {/* {isHistoryError && <div>{HistoryErrorData}</div>} */}
+        {isHistoryError ? <div>{HistoryErrorData}</div>
+          :isHistoryLoading ? (
           new Array(6).fill().map((_, id) => <CardLoader key={id} />)
         ) : HistoryData.length > 0 ? (
           HistoryData.map((item) => <CardHistory key={item._id} item={item} />)

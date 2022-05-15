@@ -6,7 +6,12 @@ const CategoryContext = createContext(InitialSharedState);
 
 const CategoryProvider = ({ children }) => {
   const [state, dispatch] = useReducer(SharedReducer, InitialSharedState);
-  const { data: categoryData, loading: ischipLoading, error: chipError } = state;
+  const {
+    data: categoryData,
+    loading: ischipLoading,
+    errorStatus: ischipError,
+    errorData: chipErrorData,
+  } = state;
 
   const [selectedCategory, setSelectedCategory] = useState("All");
 
@@ -29,7 +34,8 @@ const CategoryProvider = ({ children }) => {
         getCategories,
         categoryData,
         ischipLoading,
-        chipError,
+        ischipError,
+        chipErrorData,
         selectedCategory,
         setSelectedCategory,
       }}

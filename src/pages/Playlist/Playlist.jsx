@@ -1,7 +1,6 @@
 import "../../css/main.css";
 import "./Playlist.css";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { usePlaylist } from "../../context";
 import { CardLoader, CardPlaylist } from "../../components";
 import { PageEmptyImage } from "../../Assets/index";

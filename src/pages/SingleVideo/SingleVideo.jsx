@@ -16,9 +16,9 @@ export const SingleVideo = () => {
   useScrollToTop();
 
   const { videoId } = useParams();
-  const { getSingleVideo, singleVideo, issinglecardLoading, singlecardError } =
+  const { getSingleVideo, singleVideo, issinglecardLoading, issinglecardError, singlecardErrorData } =
     useSingleVideo();
-  const { getAllVideos, allVideos, iscardLoading, cardError } = useVideo();
+  const { getAllVideos, allVideos, iscardLoading, iscardError, cardErrorData } = useVideo();
 
   const [filteredVideos, setFilteredVideos] = useState([]);
 
@@ -38,7 +38,8 @@ export const SingleVideo = () => {
   return (
     <main className="main-single-video">
       <div className="container-single-video-page flex flex-column pd-2 pdl-5">
-        {issinglecardLoading ? (
+        {issinglecardError ? <div>{singlecardErrorData}</div>
+          :issinglecardLoading ? (
           <SingleVideoLoader />
         ) : (
           <SingleCardVideo singleVideo={singleVideo} />
@@ -47,7 +48,8 @@ export const SingleVideo = () => {
         <div className="section-related-videos ml-2 pdl-1 flex flex-column flex-gap-2 ">
           <h4>Related Videos</h4>
           <div className="container-related-videos flex flex-column flex-gap-2">
-            {iscardLoading ? (
+            {iscardError ? <div>{cardErrorData}</div>
+              :iscardLoading ? (
               new Array(4).fill().map((_, id) => <CardLoader key={id} />)
             ) : filteredVideos.length > 0 ? (
               filteredVideos.map((item) => (

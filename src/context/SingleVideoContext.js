@@ -9,7 +9,8 @@ const SingleVideoProvider = ({ children }) => {
   const {
     data: singleVideo,
     loading: issinglecardLoading,
-    error: singlecardError,
+    errorStatus: issinglecardError,
+    errorData: singlecardErrorData,
   } = state;
 
   const getSingleVideo = async (_id) => {
@@ -31,7 +32,8 @@ const SingleVideoProvider = ({ children }) => {
         getSingleVideo,
         singleVideo,
         issinglecardLoading,
-        singlecardError,
+        issinglecardError,
+        singlecardErrorData,
       }}
     >
       {children}

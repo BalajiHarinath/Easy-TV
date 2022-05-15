@@ -10,7 +10,8 @@ const WatchLaterProvider = ({ children }) => {
   const {
     data: watchLaterVideos,
     loading: isWatchLaterVideoLoading,
-    error: watchlaterVideoError,
+    errorStatus: isWatchlaterVideoError,
+    errorData: watchlaterVideoErrorData,
   } = state;
 
   const config = {
@@ -65,6 +66,7 @@ const WatchLaterProvider = ({ children }) => {
       }
     } catch (error) {
       dispatch({ type: "ERROR", payload: error });
+      console.error(error);
     }
   };
 
@@ -76,7 +78,8 @@ const WatchLaterProvider = ({ children }) => {
         addItemToWatchLater,
         watchLaterVideos,
         isWatchLaterVideoLoading,
-        watchlaterVideoError,
+        isWatchlaterVideoError,
+        watchlaterVideoErrorData,
       }}
     >
       {children}

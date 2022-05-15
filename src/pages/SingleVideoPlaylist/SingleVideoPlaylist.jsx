@@ -17,8 +17,13 @@ export const SingleVideoPlaylist = () => {
 
   const { singleplaylistId, singlevideoId } = useParams();
 
-  const { getSingleVideo, singleVideo, issinglecardLoading, singlecardError } =
-    useSingleVideo();
+  const {
+    getSingleVideo,
+    singleVideo,
+    issinglecardLoading,
+    issinglecardError,
+    singlecardErrorData,
+  } = useSingleVideo();
 
   const { getVideosFromPlaylist, playlistState } = usePlaylist();
   const { playlistLoading, playlist } = playlistState;
@@ -47,7 +52,9 @@ export const SingleVideoPlaylist = () => {
   return (
     <main className="main-single-video">
       <div className="container-single-video-page flex flex-column pd-2 pdl-5">
-        {issinglecardLoading ? (
+        {/* {issinglecardError && } */}
+        {issinglecardError ? <div>{singlecardErrorData}</div>
+          : issinglecardLoading ? (
           <SingleVideoLoader />
         ) : (
           <SingleCardVideo singleVideo={singleVideo} />

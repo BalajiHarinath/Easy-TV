@@ -10,7 +10,8 @@ const LikedVideoProvider = ({ children }) => {
   const {
     data: LikedVideos,
     loading: isLikedVideosLoading,
-    error: LikedVideosError,
+    errorStatus: isLikedVideosError,
+    errorData: LikedVideosErrorData,
   } = state;
 
   const config = {
@@ -29,6 +30,7 @@ const LikedVideoProvider = ({ children }) => {
         dispatch({ type: "SUCCESS", payload: response.data.likes });
       }
     } catch (error) {
+      dispatch({ type: "ERROR", payload: error });
       console.error(error);
     }
   };
@@ -42,6 +44,7 @@ const LikedVideoProvider = ({ children }) => {
         addToast({ status: "added", msg: "Added to liked videos" });
       }
     } catch (error) {
+      dispatch({ type: "ERROR", payload: error });
       console.error(error);
     }
   };
@@ -55,6 +58,7 @@ const LikedVideoProvider = ({ children }) => {
         addToast({ status: "removed", msg: "Removed from liked videos" });
       }
     } catch (error) {
+      dispatch({ type: "ERROR", payload: error });
       console.error(error);
     }
   };
@@ -67,7 +71,8 @@ const LikedVideoProvider = ({ children }) => {
         removeItemFromLikedVideos,
         LikedVideos,
         isLikedVideosLoading,
-        LikedVideosError,
+        isLikedVideosError,
+        LikedVideosErrorData,
       }}
     >
       {children}
