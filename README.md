@@ -1,16 +1,9 @@
 # Easy TV
- <div align="center">
 
-<br>
-
-</div>
- 
- ---
 
 A video library in which you can browse multiple videos, like them, save them to watch later or playlist and even browse the history.
 
 Live Preview:
-
 ---
 
 ### Features:
