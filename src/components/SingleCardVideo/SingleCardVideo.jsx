@@ -26,15 +26,15 @@ export const SingleCardVideo = ({ singleVideo }) => {
   return (
     <div>
       <iframe
+        className="iframe-single-card-video"
         width="100%"
         height="500px"
         frameBorder="0"
-        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
         src={`https://www.youtube.com/embed/${singleVideo.url}`}
         title="Youtube video"
       ></iframe>
-      <div className="flex flex-column pdt-1">
+      <div className="container-text-single-video-card flex flex-column pdt-1">
         <div className="flex flex-justify-space-between">
           <p className="font-semibold">{singleVideo.title}</p>
           <div className="flex flex-gap-1 text-sm">
@@ -63,7 +63,7 @@ export const SingleCardVideo = ({ singleVideo }) => {
                 <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">
                   favorite
                 </span>
-                Remove from Liked Videos
+                Like
               </button>
             ) : (
               <button
@@ -85,7 +85,7 @@ export const SingleCardVideo = ({ singleVideo }) => {
                 <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">
                   watch_later
                 </span>
-                Remove from Watch Later
+                Watch Later
               </button>
             ) : (
               <button

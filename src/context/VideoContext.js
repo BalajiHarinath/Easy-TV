@@ -6,7 +6,7 @@ const VideoContext = createContext(InitialSharedState);
 
 const VideoProvider = ({ children }) => {
   const [state, dispatch] = useReducer(SharedReducer, InitialSharedState);
-  const { data: allVideos, loading: iscardLoading, error: cardError } = state;
+  const { data: allVideos, loading: iscardLoading, errorStatus: iscardError, errorData: cardErrorData } = state;
 
   const getAllVideos = async () => {
     dispatch({ type: "LOADING" });
@@ -16,15 +16,15 @@ const VideoProvider = ({ children }) => {
         dispatch({ type: "SUCCESS", payload: response.data.videos });
       }
     } catch (error) {
-      console.error(error);
       dispatch({ type: "ERROR", payload: error });
+      console.error(error);
     }
   };
 
 
   return (
     <VideoContext.Provider
-      value={{ getAllVideos, allVideos, iscardLoading, cardError }}
+      value={{ getAllVideos, allVideos, iscardLoading, iscardError, cardErrorData }}
     >
       {children}
     </VideoContext.Provider>

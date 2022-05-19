@@ -13,3 +13,23 @@
   max-height: 30rem;
 }
 
+/*Media Queries*/
+@media screen and (max-width: 850px) {
+  .main-liked-video-page {
+    margin-left: 4rem;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .title-liked-videos,
+  .videos-number-title-liked-videos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container-videos-liked {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}

@@ -9,12 +9,14 @@ export const VideoPage = () => {
   useDocumentTitle("Easy TV | Videos");
   useScrollToTop();
 
-  const { getAllVideos, allVideos, cardLoading, cardError } = useVideo();
+  const { getAllVideos, allVideos, cardLoading, iscardError, cardErrorData } =
+    useVideo();
   const {
     getCategories,
     categoryData,
     ischipLoading,
-    chipError,
+    ischipError,
+    chipErrorData,
     selectedCategory,
     setSelectedCategory,
   } = useCategory();
@@ -44,7 +46,9 @@ export const VideoPage = () => {
         <h4>Categories</h4>
         <div className="spacer-1"></div>
         <div className="container-category flex flex-gap-2">
-          {!ischipLoading
+          {/* {ischipError && <div>{chipErrorData}</div>} */}
+          {ischipError ? <div>{chipErrorData}</div>
+          : !ischipLoading
             ? categoryData.map((item) => (
                 <button
                   className={`${
@@ -63,13 +67,15 @@ export const VideoPage = () => {
         <div className="spacer-3"></div>
 
         <div className="container-videos flex flex-wrap flex-gap-2">
-          {!cardLoading
+          {/* {iscardError && <div>{cardErrorData}</div>} */}
+          {iscardError ? <div>{cardErrorData}</div>
+            :!cardLoading
             ? filteredVideos.length > 0
-              ? filteredVideos.map((item) => (         
-                    <CardVideo item={item}  key={item._id}/>              
+              ? filteredVideos.map((item) => (
+                  <CardVideo item={item} key={item._id} />
                 ))
               : allVideos.map((item) => (
-                    <CardVideo item={item}  key={item._id}/>
+                  <CardVideo item={item} key={item._id} />
                 ))
             : new Array(12).fill().map((_, id) => <CardLoader key={id} />)}
         </div>

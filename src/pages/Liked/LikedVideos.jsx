@@ -1,7 +1,6 @@
 import "../../css/main.css";
 import "./LikedVideos.css";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { PageEmptyImage } from "../../Assets/index";
 import { CardLoader, CardLikedVideo } from "../../components";
 import { useLikedVideo, useWatchLater } from "../../context";
@@ -15,7 +14,8 @@ export const LikedVideos = () => {
     getLikedVideos,
     LikedVideos,
     isLikedVideosLoading,
-    LikedVideosError,
+    isLikedVideosError,
+    LikedVideosErrorData,
   } = useLikedVideo();
 
   const { getWatchLaterVideos, watchLaterVideos } = useWatchLater();
@@ -28,20 +28,24 @@ export const LikedVideos = () => {
   return (
     <main className="main-liked-video-page">
       {LikedVideos.length > 0 ? (
-        <h4 className="pdl-3 pdt-3 font-semibold">
+        <h4 className="title-liked-videos font-semibold pdl-3 pdt-3">
           Liked{" "}
-          <small className="text-base font-normal pdl-0-5">
+          <small className="videos-number-title-liked-videos text-base font-normal pdl-0-5">
             {LikedVideos.length === 1
               ? "1 video"
               : `${LikedVideos.length} videos`}
           </small>
         </h4>
       ) : (
-        <h4 className="pdl-3 pdt-3 font-semibold">Liked Videos Empty</h4>
+        <h4 className="title-liked-videos font-semibold pdl-3 pdt-3">
+          Liked Videos Empty
+        </h4>
       )}
 
-      <div className="flex flex-gap-3 flex-wrap pd-3 pdt-1">
-        {isLikedVideosLoading ? (
+      <div className="container-videos-liked flex flex-gap-3 flex-wrap pd-3 pdt-1">
+        {/* {isLikedVideosError && <div>{LikedVideosErrorData}</div>} */}
+        {isLikedVideosError ? <div>{LikedVideosErrorData}</div>
+          :isLikedVideosLoading ? (
           new Array(6).fill().map((_, id) => <CardLoader key={id} />)
         ) : LikedVideos.length > 0 ? (
           LikedVideos.map((item) => (

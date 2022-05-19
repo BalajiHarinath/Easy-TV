@@ -10,7 +10,8 @@ const HistoryProvider = ({ children }) => {
   const {
     data: HistoryData,
     loading: isHistoryLoading,
-    error: HistoryError,
+    errorStatus: isHistoryError,
+    errorData: HistoryErrorData,
   } = state;
 
   const config = {
@@ -29,6 +30,7 @@ const HistoryProvider = ({ children }) => {
         dispatch({ type: "SUCCESS", payload: response.data.history });
       }
     } catch (error) {
+      dispatch({ type: "ERROR", payload: error });
       console.error(error);
     }
   };
@@ -41,9 +43,8 @@ const HistoryProvider = ({ children }) => {
         dispatch({ type: "SUCCESS", payload: response.data.history });
       }
     } catch (error) {
-      if (error.response.status === 500) {
-        console.error(error);
-      }
+      dispatch({ type: "ERROR", payload: error });
+      console.error(error);
     }
   };
 
@@ -56,6 +57,7 @@ const HistoryProvider = ({ children }) => {
         addToast({ status: "removed", msg: "Removed from history" });
       }
     } catch (error) {
+      dispatch({ type: "ERROR", payload: error });
       console.error(error);
     }
   };
@@ -69,6 +71,7 @@ const HistoryProvider = ({ children }) => {
         addToast({ status: "removed", msg: "History cleared" });
       }
     } catch (error) {
+      dispatch({ type: "ERROR", payload: error });
       console.error(error);
     }
   };
@@ -82,7 +85,8 @@ const HistoryProvider = ({ children }) => {
         clearHistory,
         HistoryData,
         isHistoryLoading,
-        HistoryError,
+        isHistoryError,
+        HistoryErrorData,
       }}
     >
       {children}

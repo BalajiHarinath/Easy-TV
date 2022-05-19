@@ -19,3 +19,28 @@
 .btn-clear-all:hover {
   background-color: var(--primary-color);
 }
+
+/*Media Queries*/
+@media screen and (max-width: 850px) {
+  .main-history {
+    margin-left: 4rem;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .title-history,
+  .videos-number-title-history {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title-history {
+    padding-top: 5rem;
+  }
+
+  .container-videos-history {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
