@@ -7,8 +7,6 @@ import { useHistory, usePlaylist } from "../../context";
 export const CardPlaylist = ({ playlist }) => {
   const { addVideoToHistory } = useHistory();
   const { removePlaylist } = usePlaylist();
-  //   const { playlistLoading, playlists, playlistError, removeplaylistLoading } =
-  //     playlistState;
 
   if (playlist?.videos?.length !== 0) {
     var src = playlist.videos[0].thumbnail.url;
