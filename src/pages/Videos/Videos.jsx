@@ -46,7 +46,6 @@ export const VideoPage = () => {
         <h4>Categories</h4>
         <div className="spacer-1"></div>
         <div className="container-category flex flex-gap-2">
-          {/* {ischipError && <div>{chipErrorData}</div>} */}
           {ischipError ? <div>{chipErrorData}</div>
           : !ischipLoading
             ? categoryData.map((item) => (
@@ -67,7 +66,6 @@ export const VideoPage = () => {
         <div className="spacer-3"></div>
 
         <div className="container-videos flex flex-wrap flex-gap-2">
-          {/* {iscardError && <div>{cardErrorData}</div>} */}
           {iscardError ? <div>{cardErrorData}</div>
             :!cardLoading
             ? filteredVideos.length > 0

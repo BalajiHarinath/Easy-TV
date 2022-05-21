@@ -43,7 +43,6 @@ export const LikedVideos = () => {
       )}
 
       <div className="container-videos-liked flex flex-gap-3 flex-wrap pd-3 pdt-1">
-        {/* {isLikedVideosError && <div>{LikedVideosErrorData}</div>} */}
         {isLikedVideosError ? <div>{LikedVideosErrorData}</div>
           :isLikedVideosLoading ? (
           new Array(6).fill().map((_, id) => <CardLoader key={id} />)

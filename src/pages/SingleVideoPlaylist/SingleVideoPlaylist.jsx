@@ -52,7 +52,6 @@ export const SingleVideoPlaylist = () => {
   return (
     <main className="main-single-video">
       <div className="container-single-video-page flex flex-column pd-2 pdl-5">
-        {/* {issinglecardError && } */}
         {issinglecardError ? <div>{singlecardErrorData}</div>
           : issinglecardLoading ? (
           <SingleVideoLoader />

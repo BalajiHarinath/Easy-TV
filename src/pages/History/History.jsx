@@ -48,7 +48,6 @@ export const History = () => {
         </h4>
       )}
       <div className="container-videos-history flex flex-gap-3 flex-wrap pd-3 pdt-1">
-        {/* {isHistoryError && <div>{HistoryErrorData}</div>} */}
         {isHistoryError ? <div>{HistoryErrorData}</div>
           :isHistoryLoading ? (
           new Array(6).fill().map((_, id) => <CardLoader key={id} />)

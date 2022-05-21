@@ -55,7 +55,6 @@ export const Home = () => {
         <h4>Categories</h4>
         <div className="spacer-1"></div>
         <div className="container-category flex flex-gap-2">
-          {/* {ischipError && <div>{chipErrorData}</div>} */}
           {ischipError ? <div>{chipErrorData}</div>
             :!ischipLoading
             ? categoryData.map((item) => (
@@ -77,7 +76,6 @@ export const Home = () => {
       <h4 className="title-must-watch-videos-home">Must Watch Videos</h4>
       <div className="spacer-1"></div>
       <div className="container-must-watch-videos flex flex-wrap flex-gap-2">
-        {/* {iscardError && <div>{cardErrorData}</div>} */}
         {iscardError ? <div>{cardErrorData}</div> 
           :!cardLoading
           ? mustWatchVideos.map((item) => (
