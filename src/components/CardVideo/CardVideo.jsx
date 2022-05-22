@@ -102,7 +102,7 @@ export const CardVideo = ({ item }) => {
   };
 
   return (
-    <div className="container-card flex flex-column flex-gap-0-5" ref={ref}>
+    <div className="container-card flex flex-column flex-gap-0-5">
       <Link
         className="container-img-thumbnail-card cursor-pointer"
         onMouseLeave={() => setIsPlay(false)}
