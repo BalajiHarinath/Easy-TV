@@ -43,5 +43,16 @@ export const PlaylistReducer = (state, { type, payload }) => {
 
     case "GET_VIDEOS_FROM_PLAYLIST":
       return { ...state, playlistLoading: false, playlist: payload };
+
+    case "LOGOUT":
+      return {
+        ...state,
+        playlists: payload.playlists,
+        updatedplaylist: payload.updatedplaylist,
+        playlist: payload.playlist,
+      };
+
+    default:
+      return state;
   }
 };

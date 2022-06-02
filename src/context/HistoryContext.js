@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useState, useReducer } from "react";
 import { SharedReducer, InitialSharedState } from "../utils";
 import axios from "axios";
 import { useToast } from "./ToastContext";
@@ -20,6 +20,8 @@ const HistoryProvider = ({ children }) => {
     },
   };
 
+  const [inHistory, setInHistory] = useState([]);
+
   const { addToast } = useToast();
 
   const getHistoryVideos = async () => {
@@ -27,10 +29,11 @@ const HistoryProvider = ({ children }) => {
       dispatch({ type: "LOADING" });
       const response = await axios.get("/api/user/history", config);
       if (response.status === 200) {
+        console.log(response.data.history);
         dispatch({ type: "SUCCESS", payload: response.data.history });
       }
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error });
+      dispatch({ type: "ERROR", payload: error.response.data.errors[0] });
       console.error(error);
     }
   };
@@ -43,7 +46,7 @@ const HistoryProvider = ({ children }) => {
         dispatch({ type: "SUCCESS", payload: response.data.history });
       }
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error });
+      dispatch({ type: "ERROR", payload: error.response.data.errors[0] });
       console.error(error);
     }
   };
@@ -71,7 +74,7 @@ const HistoryProvider = ({ children }) => {
         addToast({ status: "removed", msg: "History cleared" });
       }
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error });
+      dispatch({ type: "ERROR", payload: error.response.data.errors[0] });
       console.error(error);
     }
   };
@@ -87,6 +90,8 @@ const HistoryProvider = ({ children }) => {
         isHistoryLoading,
         isHistoryError,
         HistoryErrorData,
+        inHistory,
+        setInHistory,
       }}
     >
       {children}

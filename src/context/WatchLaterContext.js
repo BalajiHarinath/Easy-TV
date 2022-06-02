@@ -30,7 +30,7 @@ const WatchLaterProvider = ({ children }) => {
         dispatch({ type: "SUCCESS", payload: response.data.watchlater });
       }
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error });
+      dispatch({ type: "ERROR", payload: error.response.data.errors[0] });
       console.error(error);
     }
   };
@@ -48,7 +48,7 @@ const WatchLaterProvider = ({ children }) => {
         addToast({ status: "added", msg: "Added to watch later" });
       }
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error });
+      dispatch({ type: "ERROR", payload: error.response.data.errors[0] });
       console.error(error);
     }
   };
@@ -65,9 +65,13 @@ const WatchLaterProvider = ({ children }) => {
         addToast({ status: "removed", msg: "Removed from watch later" });
       }
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error });
+      dispatch({ type: "ERROR", payload: error.response.data.errors[0] });
       console.error(error);
     }
+  };
+
+  const logoutWatchLaterVideos = () => {
+    dispatch({ type: "LOGOUT", payload: [] });
   };
 
   return (
@@ -76,6 +80,7 @@ const WatchLaterProvider = ({ children }) => {
         getWatchLaterVideos,
         removeItemFromWatchLater,
         addItemToWatchLater,
+        logoutWatchLaterVideos,
         watchLaterVideos,
         isWatchLaterVideoLoading,
         isWatchlaterVideoError,

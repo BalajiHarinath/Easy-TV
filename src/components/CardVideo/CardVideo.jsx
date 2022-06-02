@@ -1,7 +1,7 @@
 import "../../css/main.css";
 import "./CardVideo.css";
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useWatchLater, useHistory, usePlaylist } from "../../context";
 import { CardVideoPlaylist } from "./CardVideoPlaylist";
 import { ChipLoader } from "../index";
@@ -12,6 +12,8 @@ export const CardVideo = ({ item }) => {
   const [isSavetoPlaylistClicked, setIsSavetoPlaylistClicked] = useState(false);
   const [clickedCreateNewPlaylist, setClickedCreateNewPlaylist] =
     useState(false);
+  const encodedToken = localStorage.getItem("videoToken");
+  const navigate = useNavigate();
 
   const [playlistDetails, setPlaylistDetails] = useState({
     title: "",
@@ -34,7 +36,7 @@ export const CardVideo = ({ item }) => {
 
   const { getAllPlaylists, addNewPlaylist, playlistState } = usePlaylist();
 
-  const { addVideoToHistory } = useHistory();
+  const { inHistory, setInHistory } = useHistory();
 
   const ref = useRef(null);
 
@@ -73,11 +75,11 @@ export const CardVideo = ({ item }) => {
   }, [isSavetoPlaylistClicked]);
 
   useEffect(() => {
-    getWatchLaterVideos();
+    encodedToken && getWatchLaterVideos();
   }, []);
 
   useEffect(() => {
-    getAllPlaylists();
+    encodedToken && getAllPlaylists();
   }, [
     clickedCreateNewPlaylist,
     addVideoToplaylistLoading,
@@ -107,8 +109,10 @@ export const CardVideo = ({ item }) => {
         className="container-img-thumbnail-card cursor-pointer"
         onMouseLeave={() => setIsPlay(false)}
         onMouseEnter={() => setIsPlay(true)}
-        to={`/singlevideo/${item._id}`}
-        onClick={() => addVideoToHistory(item)}
+        onClick={() => {
+          encodedToken && setInHistory([...inHistory, item._id]);
+        }}
+        to={`${encodedToken ? `/singlevideo/${item._id}` : "/login"}`}
       >
         <img
           className="img-thumbnail-card"
@@ -163,22 +167,36 @@ export const CardVideo = ({ item }) => {
           }`}
         >
           <ul className="list-style-none pd-0-5">
-            {watchLaterVideos.some((item) => item._id === _id) ? (
-              <li
-                className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => removeItemFromWatchLater(_id)}
-              >
-                <span className="material-icons-outlined icon btn-transparent pdr-0-5">
-                  watch_later
-                </span>
-                <div className="btn-transparent text-sm">
-                  Remove from Watch Later
-                </div>
-              </li>
+            {encodedToken ? (
+              watchLaterVideos.some((item) => item._id === _id) ? (
+                <li
+                  className="item-container-overlay-text-video-card flex flex-align-center"
+                  onClick={() => removeItemFromWatchLater(_id)}
+                >
+                  <span className="material-icons-outlined icon btn-transparent pdr-0-5">
+                    watch_later
+                  </span>
+                  <div className="btn-transparent text-sm">
+                    Remove from Watch Later
+                  </div>
+                </li>
+              ) : (
+                <li
+                  className="item-container-overlay-text-video-card flex flex-align-center"
+                  onClick={() => addItemToWatchLater(item)}
+                >
+                  <span className="material-icons-outlined icon btn-transparent pdr-0-5">
+                    watch_later
+                  </span>
+                  <div className="btn-transparent text-sm">
+                    Add to Watch Later
+                  </div>
+                </li>
+              )
             ) : (
               <li
                 className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => addItemToWatchLater(item)}
+                onClick={() => navigate("/login")}
               >
                 <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                   watch_later

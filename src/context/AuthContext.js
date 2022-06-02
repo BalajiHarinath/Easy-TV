@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import { AuthReducer, InitialAuthData } from "../utils";
 import { useToast } from "./ToastContext";
+import { useHistory } from "./HistoryContext";
 
 const AuthContext = createContext(InitialAuthData);
 
@@ -99,8 +100,8 @@ const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    authDispatch({ type: "LOGOUT", payload: "" });
-    localStorage.clear();
+    localStorage.removeItem("videoToken");
+    authDispatch({ type: "LOGOUT", payload: {} });
     addToast({ status: "removed", msg: "Logged out" });
   };
 

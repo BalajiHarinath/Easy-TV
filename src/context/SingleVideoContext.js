@@ -21,7 +21,7 @@ const SingleVideoProvider = ({ children }) => {
         dispatch({ type: "SUCCESS", payload: response.data.video });
       }
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error });
+      dispatch({ type: "ERROR", payload: error.response.data.errors[0] });
       console.error(error);
     }
   };

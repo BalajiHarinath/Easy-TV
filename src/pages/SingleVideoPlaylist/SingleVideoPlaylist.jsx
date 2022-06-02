@@ -44,7 +44,7 @@ export const SingleVideoPlaylist = () => {
         (video) => video._id !== singlevideoId
       );
       setFilteredVideos(tempVideos);
-    }, 0);
+    }, 2000);
     // Used set timeout because the playlist videos
     // needs to be filtered after we fetch from getVideosFromPlaylist
   }, [playlistLoading]);
@@ -52,8 +52,9 @@ export const SingleVideoPlaylist = () => {
   return (
     <main className="main-single-video">
       <div className="container-single-video-page flex flex-column pd-2 pdl-5">
-        {issinglecardError ? <div>{singlecardErrorData}</div>
-          : issinglecardLoading ? (
+        {issinglecardError ? (
+          <div>{singlecardErrorData}</div>
+        ) : issinglecardLoading ? (
           <SingleVideoLoader />
         ) : (
           <SingleCardVideo singleVideo={singleVideo} />

@@ -13,6 +13,7 @@ import {
   Playlist,
   PlaylistDetails,
   SingleVideoPlaylist,
+  Profile,
   Error,
 } from "./pages";
 
@@ -34,8 +35,17 @@ function App() {
           <Route path="/liked" element={<LikedVideos />} />
           <Route path="/history" element={<History />} />
           <Route path="/playlist" element={<Playlist />} />
-          <Route path="/playlist/:playlistId" element={<PlaylistDetails />} exact/>
-          <Route path="/playlist/:singleplaylistId/:singlevideoId" element={<SingleVideoPlaylist />} exact/>
+          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/playlist/:playlistId"
+            element={<PlaylistDetails />}
+            exact
+          />
+          <Route
+            path="/playlist/:singleplaylistId/:singlevideoId"
+            element={<SingleVideoPlaylist />}
+            exact
+          />
         </Route>
         <Route path="*" element={<Error />} />
       </Routes>
