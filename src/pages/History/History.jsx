@@ -52,7 +52,7 @@ export const History = () => {
       <div className="container-videos-history flex flex-gap-3 flex-wrap pd-3 pdt-1">
         {/* {isHistoryError && <div>{HistoryErrorData}</div>} */}
         {isHistoryLoading && ( new Array(6).fill().map((_, id) => <CardLoader key={id} />))}
-        {HistoryData.length > 0 && (
+        {HistoryData.length > 0 && !isHistoryLoading &&(
           HistoryData.map((item) => <CardHistory key={item._id} item={item} />)) }
         {HistoryData.length === 0 && !isHistoryLoading &&(
           <div className="conatiner-liked-videos-empty">
