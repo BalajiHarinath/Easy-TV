@@ -5,7 +5,7 @@ import { PlaylistEmptyImage } from "../../Assets/index";
 import { useHistory, usePlaylist } from "../../context";
 
 export const CardPlaylist = ({ playlist }) => {
-  const { addVideoToHistory } = useHistory();
+  const { inHistory, setInHistory } = useHistory();
   const { removePlaylist } = usePlaylist();
 
   if (playlist?.videos?.length !== 0) {
@@ -35,7 +35,7 @@ export const CardPlaylist = ({ playlist }) => {
           className={`${
             playlist?.videos?.length === 0 ? "disable-link" : "cursor-pointer"
           } container-overlay-img-playlist-card flex flex-justify-center flex-align-center`}
-          onClick={() => addVideoToHistory(playlist?.videos[0])}
+          onClick={() => setInHistory([...inHistory, playlist?.videos[0]?._id])}
           to={`/playlist/${playlist?._id}/${playlist?.videos[0]?._id}`}
         >
           <div className="flex flex-column">

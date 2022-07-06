@@ -23,7 +23,7 @@ const CategoryProvider = ({ children }) => {
         dispatch({ type: "SUCCESS", payload: response.data.categories });
       }
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error });
+      dispatch({ type: "ERROR", payload: error.response.data.errors[0] });
       console.error(error);
     }
   };

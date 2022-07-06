@@ -1,7 +1,7 @@
 import "../../css/main.css";
 import "./SingleCardVideo.css";
 import { useEffect } from "react";
-import { useWatchLater, useLikedVideo } from "../../context";
+import { useWatchLater, useLikedVideo, useHistory } from "../../context";
 
 export const SingleCardVideo = ({ singleVideo }) => {
   const {
@@ -18,10 +18,116 @@ export const SingleCardVideo = ({ singleVideo }) => {
     LikedVideos,
   } = useLikedVideo();
 
+  const { inHistory, addVideoToHistory } = useHistory();
+
   useEffect(() => {
     getWatchLaterVideos();
     getLikedVideos();
   }, []);
+
+  useEffect(() => {
+    const frequencyOfVideosInHistory = inHistory.reduce((acc, curr) => {
+      if (acc[curr]) acc[curr]++;
+      else acc[curr] = 1;
+      return acc;
+    }, {});
+    if (frequencyOfVideosInHistory[singleVideo._id] === 1) {
+      addVideoToHistory(singleVideo);
+    }
+  }, []);
+
+  // const addToLikedVideos = () => {
+  //   console.log("liked")
+  //   addItemToLikedVideos(singleVideo)
+  // }
+
+  // const removeFromLikedVideos = () => {
+  //   removeItemFromLikedVideos(singleVideo._id)
+  // }
+
+  // const addToWatchLater = () => {
+  //   addItemToWatchLater(singleVideo)
+  // }
+
+  // const removeFromWatchLater = () => {
+  //   removeItemFromWatchLater(singleVideo._id)
+  // }
+
+  // const throttlelike = (fn, delay) => {
+  //   console.log(fn, delay)
+
+  //   let flag1 = true;
+  //       return function(){
+  //         console.log(flag1, delay)
+  //           if(flag1){
+  //               fn();
+  //               flag1 = false;
+  //               setTimeout(() => {
+  //                   flag1 = true;
+  //               }, delay)
+  //           }
+  //       }
+  // }
+
+  // const throttleremovelike = (fn, delay) => {
+  //   console.log("disliked")
+  //   let flag2 = true;
+  //   return function(){
+  //       if(flag2){
+  //           fn();
+  //           flag2 = false;
+  //           setTimeout(() => {
+  //               flag2 = true;
+  //           },delay)
+  //       }
+  //   }
+  // }
+
+  // const throttleaddtowatchlater = (fn, delay) => {
+  //   let flag3 = true;
+  //   return function(){
+  //       if(flag3){
+  //           fn();
+  //           flag3 = false;
+  //           setTimeout(() => {
+  //               flag3 = true;
+  //           },delay)
+  //       }
+  //   }
+  // }
+
+  // const throttleremovefromwatchlater = (fn, delay) => {
+  //   let flag4 = true;
+  //   return function(){
+  //       if(flag4){
+  //           fn();
+  //           flag4 = false;
+  //           setTimeout(() => {
+  //               flag4 = true;
+  //           },delay)
+  //       }
+  //   }
+  // }
+
+  //   const throttleCartItem = (fn, delay) => {
+  //     let flag = true;
+  //     return function(){
+  //         if(flag){
+  //             fn();
+  //             flag = false;
+  //             setTimeout(() => {
+  //                 flag = true;
+  //             }, delay)
+  //         }
+  //     }
+  // }
+
+  // const addToLikedVideosThrottle = throttleCartItem(addToLikedVideos, 2500);
+
+  // const addToLikedVideosThrottle = throttlelike(addToLikedVideos, 4000)
+  // const removeFromLikedVideosThrottle = throttleremovelike(removeFromLikedVideos, 4000)
+  // const addToWatchLaterVideosThrottle = throttleaddtowatchlater(addToWatchLater, 4000)
+  // const removeFromWatchLaterVideosThrottle = throttleremovefromwatchlater(removeFromWatchLater, 4000)
 
   return (
     <div>
@@ -59,6 +165,7 @@ export const SingleCardVideo = ({ singleVideo }) => {
               <button
                 className="btn-single-video btn-single-video-active font-semibold flex flex-align-center cursor-pointer"
                 onClick={() => removeItemFromLikedVideos(singleVideo._id)}
+                // onClick={removeFromLikedVideosThrottle}
               >
                 <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">
                   favorite
@@ -69,6 +176,7 @@ export const SingleCardVideo = ({ singleVideo }) => {
               <button
                 className="btn-single-video font-semibold flex flex-align-center cursor-pointer"
                 onClick={() => addItemToLikedVideos(singleVideo)}
+                // onClick={addToLikedVideosThrottle}
               >
                 <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">
                   favorite
@@ -81,6 +189,7 @@ export const SingleCardVideo = ({ singleVideo }) => {
               <button
                 className="btn-single-video btn-single-video-active font-semibold flex flex-align-center cursor-pointer"
                 onClick={() => removeItemFromWatchLater(singleVideo._id)}
+                // onClick={removeFromWatchLaterVideosThrottle}
               >
                 <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">
                   watch_later
@@ -91,6 +200,7 @@ export const SingleCardVideo = ({ singleVideo }) => {
               <button
                 className="btn-single-video font-semibold flex flex-align-center cursor-pointer"
                 onClick={() => addItemToWatchLater(singleVideo)}
+                // onClick={addToWatchLaterVideosThrottle}
               >
                 <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">
                   watch_later

@@ -30,7 +30,7 @@ const LikedVideoProvider = ({ children }) => {
         dispatch({ type: "SUCCESS", payload: response.data.likes });
       }
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error });
+      dispatch({ type: "ERROR", payload: error.response.data.errors[0] });
       console.error(error);
     }
   };
@@ -44,7 +44,7 @@ const LikedVideoProvider = ({ children }) => {
         addToast({ status: "added", msg: "Added to liked videos" });
       }
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error });
+      dispatch({ type: "ERROR", payload: error.response.data.errors[0] });
       console.error(error);
     }
   };
@@ -58,10 +58,13 @@ const LikedVideoProvider = ({ children }) => {
         addToast({ status: "removed", msg: "Removed from liked videos" });
       }
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error });
+      dispatch({ type: "ERROR", payload: error.response.data.errors[0] });
       console.error(error);
     }
   };
+  const logoutlikedVideos = () => {
+    dispatch({ type: "LOGOUT", payload: [] });
+  }
 
   return (
     <LikedVideoContext.Provider
@@ -69,6 +72,7 @@ const LikedVideoProvider = ({ children }) => {
         getLikedVideos,
         addItemToLikedVideos,
         removeItemFromLikedVideos,
+        logoutlikedVideos,
         LikedVideos,
         isLikedVideosLoading,
         isLikedVideosError,

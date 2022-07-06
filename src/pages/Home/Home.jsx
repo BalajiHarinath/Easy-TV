@@ -18,7 +18,6 @@ export const Home = () => {
     ischipLoading,
     ischipError,
     chipErrorData,
-    selectedCategory,
     setSelectedCategory,
   } = useCategory();
 

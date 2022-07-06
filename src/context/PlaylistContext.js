@@ -129,6 +129,13 @@ const PlaylistProvider = ({ children }) => {
     }
   };
 
+  const logoutPlaylist = () => {
+    playlistDispatch({
+      type: "LOGOUT",
+      payload: { playlists: [], updatedplaylist: {}, playlist: [] },
+    });
+  };
+
   return (
     <PlaylistContext.Provider
       value={{
@@ -138,6 +145,7 @@ const PlaylistProvider = ({ children }) => {
         getVideosFromPlaylist,
         addVideoToPlaylist,
         removeVideoFromPlaylist,
+        logoutPlaylist,
         playlistState,
       }}
     >

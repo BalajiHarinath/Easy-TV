@@ -9,4 +9,5 @@ export { History } from "./History/History";
 export { Playlist } from "./Playlist/Playlist";
 export { PlaylistDetails } from "./Playlist/PlaylistDetails";
 export { SingleVideoPlaylist } from "./SingleVideoPlaylist/SingleVideoPlaylist";
+export { Profile } from "./Profile/Profile";
 export { Error } from "./Error/Error";
