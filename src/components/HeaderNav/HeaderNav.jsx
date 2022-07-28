@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/Features/AuthSlice";
 import { logoutWatchLaterVideos } from "../../redux/Features/WatchLaterSlice";
+import { logoutlikedVideos } from "../../redux/Features/LikedVideoSlice";
 import { useToast } from "../../context/ToastContext";
 import { useAuth, useWatchLater, useLikedVideo } from "../../context";
 
@@ -14,7 +15,7 @@ export const HeaderNav = () => {
 
   // console.log(authData)
   // const { logoutWatchLaterVideos } = useWatchLater();
-  const { logoutlikedVideos } = useLikedVideo();
+  // const { logoutlikedVideos } = useLikedVideo();
   const encodedToken = localStorage.getItem("videoToken");
 
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ export const HeaderNav = () => {
               dispatch(logout());
               addToast({ status: "removed", msg: "Logged out" });
               dispatch(logoutWatchLaterVideos());
-              logoutlikedVideos();
+              dispatch(logoutlikedVideos());
             }}
             to="/login"
           >

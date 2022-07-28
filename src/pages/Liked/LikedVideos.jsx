@@ -5,6 +5,7 @@ import { PageEmptyImage } from "../../Assets/index";
 import { CardLoader, CardLikedVideo } from "../../components";
 import { useLikedVideo, useWatchLater } from "../../context";
 import { getWatchLaterVideos } from "../../redux/Features/WatchLaterSlice";
+import { getLikedVideos } from "../../redux/Features/LikedVideoSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
 
@@ -12,21 +13,22 @@ export const LikedVideos = () => {
   useDocumentTitle("Easy TV | LikedVideos");
   useScrollToTop();
 
-  const {
-    getLikedVideos,
-    LikedVideos,
-    isLikedVideosLoading,
-    isLikedVideosError,
-    LikedVideosErrorData,
-  } = useLikedVideo();
+  // const {
+  //   getLikedVideos,
+  //   LikedVideos,
+  //   isLikedVideosLoading,
+  //   isLikedVideosError,
+  //   LikedVideosErrorData,
+  // } = useLikedVideo();
 
   // const { getWatchLaterVideos, watchLaterVideos } = useWatchLater();
-  const { watchLaterVideos } = useSelector((state) => state.watchLaterReducer)
+  const { watchLaterVideos } = useSelector((state) => state.watchLaterReducer);
+  const { LikedVideos, isLikedVideosLoading, isLikedVideosError, LikedVideosErrorData } = useSelector((state) => state.likedVideoReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getWatchLaterVideos());
-    getLikedVideos();
+    dispatch(getLikedVideos());
   }, []);
 
   return (

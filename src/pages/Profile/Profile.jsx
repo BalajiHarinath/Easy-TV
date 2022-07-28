@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
 import { logout } from "../../redux/Features/AuthSlice";
 import { logoutWatchLaterVideos } from "../../redux/Features/WatchLaterSlice";
+import { logoutlikedVideos } from "../../redux/Features/LikedVideoSlice";
 import { useToast } from "../../context/ToastContext";
 
 export const Profile = () => {
@@ -16,13 +17,13 @@ export const Profile = () => {
   const dispatch = useDispatch();
   const { authData } = useSelector((state) => state.authReducer);
   // const { logoutWatchLaterVideos } = useWatchLater();
-  const { logoutlikedVideos } = useLikedVideo();
+  // const { logoutlikedVideos } = useLikedVideo();
 
   const logoutHandler = () => {
     dispatch(logout());
     addToast({ status: "removed", msg: "Logged out" });
     dispatch(logoutWatchLaterVideos());
-    logoutlikedVideos();
+    dispatch(logoutlikedVideos());
   };
   return (
     <div className="main-profile">

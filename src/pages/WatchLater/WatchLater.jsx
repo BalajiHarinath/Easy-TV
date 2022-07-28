@@ -3,9 +3,10 @@ import "./WatchLater.css";
 import { useEffect } from "react";
 import { PageEmptyImage } from "../../Assets/index";
 import { CardLoader, CardWatchLater } from "../../components";
-import { useLikedVideo } from "../../context";
+// import { useLikedVideo } from "../../context";
 import { useSelector, useDispatch } from "react-redux";
 import { getWatchLaterVideos } from "../../redux/Features/WatchLaterSlice";
+import { getLikedVideos } from "../../redux/Features/LikedVideoSlice";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
 
 export const WatchLater = () => {
@@ -22,11 +23,12 @@ export const WatchLater = () => {
 
   const { watchLaterVideos, isWatchLaterVideoLoading, isWatchlaterVideoError, watchlaterVideoErrorData } = useSelector((state) => state.watchLaterReducer)
 
-  const { getLikedVideos, LikedVideos } = useLikedVideo();
+  // const { getLikedVideos, LikedVideos } = useLikedVideo();
+  const { LikedVideos } = useSelector((state) => state.likedVideoReducer)
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getLikedVideos();
+    dispatch(getLikedVideos());
     dispatch(getWatchLaterVideos());
   }, []);
 

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getWatchLaterVideosService, addItemToWatchLaterService, removeItemFromWatchLaterService } from "../Services/WatchLaterService";
 
 const initialState = {
@@ -17,7 +17,7 @@ const getWatchLaterVideos = createAsyncThunk(
                 return response;
             }
         }catch(error){
-            return rejectWithValue(error.response.data)
+            return rejectWithValue(error.response.data.errors[0])
         }
     }
 )
@@ -31,7 +31,7 @@ const addItemToWatchLater = createAsyncThunk(
                 return response;
             }
         }catch(error){
-            return rejectWithValue(error.response.data)
+            return rejectWithValue(error.response.data.errors[0])
         }  
     }
 )
@@ -45,8 +45,7 @@ const removeItemFromWatchLater = createAsyncThunk(
                 return response;
             }
         }catch(error){
-            // return rejectWithValue(error.response.data.errors[0])
-            return rejectWithValue(error.response.data)
+            return rejectWithValue(error.response.data.errors[0])
         }
     }
 )
@@ -58,7 +57,8 @@ const watchLaterSlice = createSlice({
         logoutWatchLaterVideos: (state) => {
             state.isWatchLaterVideoLoading = false;
             state.isWatchlaterVideoError = false;
-            state.watchlaterVideoErrorData = [];
+            state.watchlaterVideoErrorData = null;
+            state.watchLaterVideos = [];
         }
     },
     extraReducers: {
@@ -71,7 +71,7 @@ const watchLaterSlice = createSlice({
             state.isWatchlaterVideoError = false;
             state.watchLaterVideos = action.payload?.data?.watchlater;
         },
-        [getWatchLaterVideos.error]: (state, action) => {
+        [getWatchLaterVideos.rejected]: (state, action) => {
             state.isWatchLaterVideoLoading = false;
             state.isWatchlaterVideoError = true;
             state.watchlaterVideoErrorData = action.payload;
@@ -85,7 +85,7 @@ const watchLaterSlice = createSlice({
             state.isWatchlaterVideoError = false;
             state.watchLaterVideos = action.payload?.data?.watchlater;
         },
-        [addItemToWatchLater.error]: (state, action) => {
+        [addItemToWatchLater.rejected]: (state, action) => {
             state.isWatchLaterVideoLoading = false;
             state.isWatchlaterVideoError = true;
             state.watchlaterVideoErrorData = action.payload;
@@ -99,7 +99,7 @@ const watchLaterSlice = createSlice({
             state.isWatchlaterVideoError = false;
             state.watchLaterVideos = action.payload?.data?.watchlater;
         },
-        [removeItemFromWatchLater.error]: (state, action) => {
+        [removeItemFromWatchLater.rejected]: (state, action) => {
             state.isWatchLaterVideoLoading = false;
             state.isWatchlaterVideoError = true;
             state.watchlaterVideoErrorData = action.payload;

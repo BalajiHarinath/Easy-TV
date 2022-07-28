@@ -178,7 +178,7 @@ export const CardVideo = ({ item }) => {
               watchLaterVideos.some((item) => item._id === _id) ? (
                 <li
                   className="item-container-overlay-text-video-card flex flex-align-center"
-                  onClick={() => dispatch(removeItemFromWatchLater(_id)).then(() => addToast({ status: "removed", msg: "Removed from watch later" }))}
+                  onClick={() => dispatch(removeItemFromWatchLater(_id)).unwrap().then(() => addToast({ status: "removed", msg: "Removed from watch later" }))}
                 >
                   <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                     watch_later
@@ -190,7 +190,7 @@ export const CardVideo = ({ item }) => {
               ) : (
                 <li
                   className="item-container-overlay-text-video-card flex flex-align-center"
-                  onClick={() => dispatch(addItemToWatchLater(item)).then(() => addToast({ status: "added", msg: "Added to watch later" }))}
+                  onClick={() => dispatch(addItemToWatchLater(item)).unwrap().then(() => addToast({ status: "added", msg: "Added to watch later" }))}
                 >
                   <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                     watch_later

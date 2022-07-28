@@ -1,11 +1,5 @@
 import axios from "axios";
 
-const config = {
-    headers: {
-      authorization: localStorage.getItem("videoToken"),
-    },
-  };
-
 export const getWatchLaterVideosService = async () => {
     const response = await axios.get("/api/user/watchlater", 
     {
