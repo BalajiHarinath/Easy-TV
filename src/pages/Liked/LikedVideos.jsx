@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { PageEmptyImage } from "../../Assets/index";
 import { CardLoader, CardLikedVideo } from "../../components";
 import { useLikedVideo, useWatchLater } from "../../context";
+import { getWatchLaterVideos } from "../../redux/Features/WatchLaterSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
 
 export const LikedVideos = () => {
@@ -18,10 +20,12 @@ export const LikedVideos = () => {
     LikedVideosErrorData,
   } = useLikedVideo();
 
-  const { getWatchLaterVideos, watchLaterVideos } = useWatchLater();
+  // const { getWatchLaterVideos, watchLaterVideos } = useWatchLater();
+  const { watchLaterVideos } = useSelector((state) => state.watchLaterReducer)
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getWatchLaterVideos();
+    dispatch(getWatchLaterVideos());
     getLikedVideos();
   }, []);
 

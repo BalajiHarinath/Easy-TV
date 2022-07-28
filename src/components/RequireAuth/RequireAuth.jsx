@@ -1,9 +1,11 @@
 import { Navigate, useLocation, Outlet } from "react-router-dom";
-import { useAuth } from "../../context";
+import { useSelector } from "react-redux";
+// import { useAuth } from "../../context";
 
 export const RequireAuth = () => {
   const location = useLocation();
-  const { authData } = useAuth();
+  // const { authData } = useAuth();
+  const { authData } = useSelector((state) => state.authReducer)
   const userID = authData._id;
 
   return userID ? (

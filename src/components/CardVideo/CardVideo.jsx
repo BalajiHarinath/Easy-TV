@@ -2,9 +2,12 @@ import "../../css/main.css";
 import "./CardVideo.css";
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useWatchLater, useHistory, usePlaylist } from "../../context";
+import { useHistory, usePlaylist } from "../../context";
+import { getWatchLaterVideos, addItemToWatchLater, removeItemFromWatchLater } from "../../redux/Features/WatchLaterSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { CardVideoPlaylist } from "./CardVideoPlaylist";
 import { ChipLoader } from "../index";
+import { useToast } from "../../context/ToastContext";
 
 export const CardVideo = ({ item }) => {
   const [isPlay, setIsPlay] = useState(false);
@@ -27,12 +30,16 @@ export const CardVideo = ({ item }) => {
 
   const { _id, title, thumbnail, channel, profile, views, playbackTime } = item;
 
-  const {
-    getWatchLaterVideos,
-    removeItemFromWatchLater,
-    addItemToWatchLater,
-    watchLaterVideos,
-  } = useWatchLater();
+  const { watchLaterVideos } = useSelector((state) => state.watchLaterReducer)
+  const dispatch = useDispatch();
+  const { addToast } = useToast();
+
+  // const {
+  //   getWatchLaterVideos,
+  //   removeItemFromWatchLater,
+  //   addItemToWatchLater,
+  //   watchLaterVideos,
+  // } = useWatchLater();
 
   const { getAllPlaylists, addNewPlaylist, playlistState } = usePlaylist();
 
@@ -75,7 +82,7 @@ export const CardVideo = ({ item }) => {
   }, [isSavetoPlaylistClicked]);
 
   useEffect(() => {
-    encodedToken && getWatchLaterVideos();
+    encodedToken && dispatch(getWatchLaterVideos());
   }, []);
 
   useEffect(() => {
@@ -171,7 +178,7 @@ export const CardVideo = ({ item }) => {
               watchLaterVideos.some((item) => item._id === _id) ? (
                 <li
                   className="item-container-overlay-text-video-card flex flex-align-center"
-                  onClick={() => removeItemFromWatchLater(_id)}
+                  onClick={() => dispatch(removeItemFromWatchLater(_id)).then(() => addToast({ status: "removed", msg: "Removed from watch later" }))}
                 >
                   <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                     watch_later
@@ -183,7 +190,7 @@ export const CardVideo = ({ item }) => {
               ) : (
                 <li
                   className="item-container-overlay-text-video-card flex flex-align-center"
-                  onClick={() => addItemToWatchLater(item)}
+                  onClick={() => dispatch(addItemToWatchLater(item)).then(() => addToast({ status: "added", msg: "Added to watch later" }))}
                 >
                   <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                     watch_later

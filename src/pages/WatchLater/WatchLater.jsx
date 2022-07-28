@@ -3,26 +3,31 @@ import "./WatchLater.css";
 import { useEffect } from "react";
 import { PageEmptyImage } from "../../Assets/index";
 import { CardLoader, CardWatchLater } from "../../components";
-import { useLikedVideo, useWatchLater } from "../../context";
+import { useLikedVideo } from "../../context";
+import { useSelector, useDispatch } from "react-redux";
+import { getWatchLaterVideos } from "../../redux/Features/WatchLaterSlice";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
 
 export const WatchLater = () => {
   useDocumentTitle("Easy TV | WatchLater");
   useScrollToTop();
 
-  const {
-    getWatchLaterVideos,
-    watchLaterVideos,
-    isWatchLaterVideoLoading,
-    isWatchlaterVideoError,
-    watchlaterVideoErrorData,
-  } = useWatchLater();
+  // const {
+  //   getWatchLaterVideos,
+  //   watchLaterVideos,
+  //   isWatchLaterVideoLoading,
+  //   isWatchlaterVideoError,
+  //   watchlaterVideoErrorData,
+  // } = useWatchLater();
+
+  const { watchLaterVideos, isWatchLaterVideoLoading, isWatchlaterVideoError, watchlaterVideoErrorData } = useSelector((state) => state.watchLaterReducer)
 
   const { getLikedVideos, LikedVideos } = useLikedVideo();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getLikedVideos();
-    getWatchLaterVideos();
+    dispatch(getWatchLaterVideos());
   }, []);
 
   return (

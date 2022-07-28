@@ -8,8 +8,11 @@ import {
   useHistory,
   usePlaylist,
 } from "../../context";
+import { addItemToWatchLater, removeItemFromWatchLater } from "../../redux/Features/WatchLaterSlice";
+import { useDispatch } from "react-redux";
 import { CardVideoPlaylist } from "../CardVideo/CardVideoPlaylist";
 import { ChipLoader } from "../index";
+import { useToast } from "../../context/ToastContext";
 
 export const CardLikedVideo = ({ item, watchLaterVideos, LikedVideos }) => {
   const [isPlay, setIsPlay] = useState(false);
@@ -18,9 +21,11 @@ export const CardLikedVideo = ({ item, watchLaterVideos, LikedVideos }) => {
   const [clickedCreateNewPlaylist, setClickedCreateNewPlaylist] =
     useState(false);
   const { _id, title, thumbnail, channel, profile, views, playbackTime } = item;
-  const { removeItemFromWatchLater, addItemToWatchLater } = useWatchLater();
+  // const { removeItemFromWatchLater, addItemToWatchLater } = useWatchLater();
   const { addItemToLikedVideos, removeItemFromLikedVideos } = useLikedVideo();
   const { inHistory, setInHistory } = useHistory();
+  const dispatch = useDispatch();
+  const { addToast } = useToast();
 
   const [playlistDetails, setPlaylistDetails] = useState({
     title: "",
@@ -161,7 +166,7 @@ export const CardLikedVideo = ({ item, watchLaterVideos, LikedVideos }) => {
             watchLaterVideos.some((item) => item._id === _id) ? (
               <li
                 className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => removeItemFromWatchLater(_id)}
+                onClick={() => dispatch(removeItemFromWatchLater(_id)).then(() => addToast({ status: "removed", msg: "Removed from watch later" }))}
               >
                 <span className="material-icons icon btn-transparent pdr-0-5">
                   watch_later
@@ -173,7 +178,7 @@ export const CardLikedVideo = ({ item, watchLaterVideos, LikedVideos }) => {
             ) : (
               <li
                 className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => addItemToWatchLater(item)}
+                onClick={() => dispatch(addItemToWatchLater(item)).then(() => addToast({ status: "added", msg: "Added to watch later" }))}
               >
                 <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                   watch_later

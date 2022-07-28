@@ -1,13 +1,23 @@
 import "../../css/main.css";
 import "./HeaderNav.css";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/Features/AuthSlice";
+import { logoutWatchLaterVideos } from "../../redux/Features/WatchLaterSlice";
+import { useToast } from "../../context/ToastContext";
 import { useAuth, useWatchLater, useLikedVideo } from "../../context";
 
 export const HeaderNav = () => {
-  const { authData, logout } = useAuth();
-  const { logoutWatchLaterVideos } = useWatchLater();
+  // const { authData, logout } = useAuth();
+  const { addToast } = useToast();
+  const { authData } = useSelector((state) => state.authReducer);
+
+  // console.log(authData)
+  // const { logoutWatchLaterVideos } = useWatchLater();
   const { logoutlikedVideos } = useLikedVideo();
   const encodedToken = localStorage.getItem("videoToken");
+
+  const dispatch = useDispatch();
 
   return (
     <nav className="nav-header flex flex-justify-space-between flex-align-center pd-2">
@@ -21,15 +31,16 @@ export const HeaderNav = () => {
         >
           <span className="material-icons-round icon">account_circle</span>
           <span className="text-sm">
-            {authData.firstName ? authData.firstName : "User"}
+            {authData?.firstName ? authData?.firstName : "User"}
           </span>
         </Link>
         {encodedToken && (
           <Link
             className="btn-transparent flex flex-column flex-justify-center flex-align-center"
             onClick={() => {
-              logout();
-              logoutWatchLaterVideos();
+              dispatch(logout());
+              addToast({ status: "removed", msg: "Logged out" });
+              dispatch(logoutWatchLaterVideos());
               logoutlikedVideos();
             }}
             to="/login"

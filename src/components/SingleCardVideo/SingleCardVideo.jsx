@@ -1,15 +1,21 @@
 import "../../css/main.css";
 import "./SingleCardVideo.css";
 import { useEffect } from "react";
-import { useWatchLater, useLikedVideo, useHistory } from "../../context";
+import { useLikedVideo, useHistory } from "../../context";
+import { useSelector, useDispatch } from "react-redux";
+import { getWatchLaterVideos, addItemToWatchLater, removeItemFromWatchLater } from "../../redux/Features/WatchLaterSlice";
+import { useToast } from "../../context/ToastContext";
 
 export const SingleCardVideo = ({ singleVideo }) => {
-  const {
-    getWatchLaterVideos,
-    removeItemFromWatchLater,
-    addItemToWatchLater,
-    watchLaterVideos,
-  } = useWatchLater();
+  // const {
+  //   getWatchLaterVideos,
+  //   removeItemFromWatchLater,
+  //   addItemToWatchLater,
+  //   watchLaterVideos,
+  // } = useWatchLater();
+  const { watchLaterVideos } = useSelector((state) => state.watchLaterReducer);
+  const dispatch = useDispatch();
+  const { addToast } = useToast();
 
   const {
     getLikedVideos,
@@ -21,7 +27,7 @@ export const SingleCardVideo = ({ singleVideo }) => {
   const { inHistory, addVideoToHistory } = useHistory();
 
   useEffect(() => {
-    getWatchLaterVideos();
+    dispatch(getWatchLaterVideos());
     getLikedVideos();
   }, []);
 
@@ -188,7 +194,7 @@ export const SingleCardVideo = ({ singleVideo }) => {
             {watchLaterVideos.some((item) => item._id === singleVideo._id) ? (
               <button
                 className="btn-single-video btn-single-video-active font-semibold flex flex-align-center cursor-pointer"
-                onClick={() => removeItemFromWatchLater(singleVideo._id)}
+                onClick={() => dispatch(removeItemFromWatchLater(singleVideo._id))}
                 // onClick={removeFromWatchLaterVideosThrottle}
               >
                 <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">
@@ -199,7 +205,7 @@ export const SingleCardVideo = ({ singleVideo }) => {
             ) : (
               <button
                 className="btn-single-video font-semibold flex flex-align-center cursor-pointer"
-                onClick={() => addItemToWatchLater(singleVideo)}
+                onClick={() => dispatch(addItemToWatchLater(singleVideo)).then(() => addToast({ status: "added", msg: "Added to watch later" }))}
                 // onClick={addToWatchLaterVideosThrottle}
               >
                 <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">

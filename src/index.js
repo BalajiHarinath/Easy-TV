@@ -15,34 +15,37 @@ import {
   PlaylistProvider,
   ToastProvider,
 } from "./context";
+import { Provider } from "react-redux";
+import { store } from "./redux/App/store";
 
 // Call make Server
 makeServer();
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <ToastProvider>
-        <AuthProvider>
-          <CategoryProvider>
-            <PlaylistProvider>
-              <LikedVideoProvider>
-                <HistoryProvider>
-                  <WatchLaterProvider>
-                    <VideoProvider>
-                      <SingleVideoProvider>
-                        <App />
-                      </SingleVideoProvider>
-                    </VideoProvider>
-                  </WatchLaterProvider>
-                </HistoryProvider>
-              </LikedVideoProvider>
-            </PlaylistProvider>       
-          </CategoryProvider>
-        </AuthProvider>
-      </ToastProvider>
-      
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <ToastProvider>
+          {/* <AuthProvider> */}
+            <CategoryProvider>
+              <PlaylistProvider>
+                <LikedVideoProvider>
+                  <HistoryProvider>
+                    <WatchLaterProvider>
+                      <VideoProvider>
+                        <SingleVideoProvider>
+                          <App />
+                        </SingleVideoProvider>
+                      </VideoProvider>
+                    </WatchLaterProvider>
+                  </HistoryProvider>
+                </LikedVideoProvider>
+              </PlaylistProvider>       
+            </CategoryProvider>
+          {/* </AuthProvider> */}
+        </ToastProvider>       
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
