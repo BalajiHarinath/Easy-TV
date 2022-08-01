@@ -7,12 +7,13 @@ import {
   useHistory,
   usePlaylist,
 } from "../../context";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { addItemToWatchLater, removeItemFromWatchLater } from "../../redux/Features/WatchLaterSlice";
 import {
   addItemToLikedVideos,
   removeItemFromLikedVideos,
 } from "../../redux/Features/LikedVideoSlice";
+import { setInHistory } from "../../redux/Features/HistorySlice";
 import { CardVideoPlaylist } from "../CardVideo/CardVideoPlaylist";
 import { ChipLoader } from "../index";
 import { useToast } from "../../context/ToastContext";
@@ -26,7 +27,8 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
   const { _id, title, thumbnail, channel, profile, views, playbackTime } = item;
   // const { removeItemFromWatchLater, addItemToWatchLater } = useWatchLater();
   // const { addItemToLikedVideos, removeItemFromLikedVideos } = useLikedVideo();
-  const { inHistory, setInHistory } = useHistory();
+  // const { inHistory, setInHistory } = useHistory();
+  const { inHistory } = useSelector((state) => state.historyReducer);
   const dispatch = useDispatch();
   const { addToast } = useToast();
 
@@ -109,7 +111,8 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
         className="container-img-thumbnail-card cursor-pointer"
         onMouseLeave={() => setIsPlay(false)}
         onMouseEnter={() => setIsPlay(true)}
-        onClick={() => setInHistory([...inHistory, item._id])}
+        // onClick={() => setInHistory([...inHistory, item._id])}
+        onClick={() => dispatch(setInHistory(item._id))}
         to={`/singlevideo/${item._id}`}
       >
         <img

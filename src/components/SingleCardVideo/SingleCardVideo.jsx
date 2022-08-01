@@ -5,6 +5,7 @@ import { useLikedVideo, useHistory } from "../../context";
 import { useSelector, useDispatch } from "react-redux";
 import { getWatchLaterVideos, addItemToWatchLater, removeItemFromWatchLater } from "../../redux/Features/WatchLaterSlice";
 import { getLikedVideos, addItemToLikedVideos, removeItemFromLikedVideos } from "../../redux/Features/LikedVideoSlice";
+import { addVideoToHistory } from "../../redux/Features/HistorySlice";
 import { useToast } from "../../context/ToastContext";
 
 export const SingleCardVideo = ({ singleVideo }) => {
@@ -15,7 +16,8 @@ export const SingleCardVideo = ({ singleVideo }) => {
   //   watchLaterVideos,
   // } = useWatchLater();
   const { watchLaterVideos } = useSelector((state) => state.watchLaterReducer);
-  const { LikedVideos } = useSelector((state) => state.likedVideoReducer)
+  const { LikedVideos } = useSelector((state) => state.likedVideoReducer);
+  const { inHistory } = useSelector((state) => state.historyReducer)
   const dispatch = useDispatch();
   const { addToast } = useToast();
 
@@ -26,7 +28,7 @@ export const SingleCardVideo = ({ singleVideo }) => {
   //   LikedVideos,
   // } = useLikedVideo();
 
-  const { inHistory, addVideoToHistory } = useHistory();
+  // const { inHistory, addVideoToHistory } = useHistory();
 
   useEffect(() => {
     dispatch(getWatchLaterVideos());
@@ -40,7 +42,7 @@ export const SingleCardVideo = ({ singleVideo }) => {
       return acc;
     }, {});
     if (frequencyOfVideosInHistory[singleVideo._id] === 1) {
-      addVideoToHistory(singleVideo);
+      dispatch(addVideoToHistory(singleVideo));
     }
   }, []);
 

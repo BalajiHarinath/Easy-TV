@@ -3,23 +3,28 @@ import "./History.css";
 import { useEffect } from "react";
 import { PageEmptyImage } from "../../Assets/index";
 import { CardLoader, CardHistory } from "../../components";
-import { useHistory } from "../../context";
+// import { useHistory } from "../../context";
+import { getHistoryVideos, clearHistory, setInHistory } from "../../redux/Features/HistorySlice";
+import { useSelector, useDispatch } from "react-redux";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
 
 export const History = () => {
   useDocumentTitle("Easy TV | History");
   useScrollToTop();
 
-  const {
-    getHistoryVideos,
-    clearHistory,
-    HistoryData,
-    isHistoryLoading,
-    setInHistory,
-  } = useHistory();
+  // const {
+  //   getHistoryVideos,
+  //   clearHistory,
+  //   HistoryData,
+  //   isHistoryLoading,
+  //   setInHistory,
+  // } = useHistory();
+
+  const dispatch = useDispatch();
+  const { HistoryData, isHistoryLoading } = useSelector((state) => state.historyReducer)
 
   useEffect(() => {
-    getHistoryVideos();
+    dispatch(getHistoryVideos());
   }, []);
 
   return (
@@ -28,8 +33,9 @@ export const History = () => {
         <div className="position-relative">
           <button
             className="btn-clear-all font-semibold"
-            onClick={() => {clearHistory();
-              setInHistory([])}}
+            onClick={() => {
+              dispatch(clearHistory());
+              dispatch(setInHistory([]))}}
           >
             Clear All
           </button>

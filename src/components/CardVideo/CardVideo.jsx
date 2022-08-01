@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useHistory, usePlaylist } from "../../context";
 import { getWatchLaterVideos, addItemToWatchLater, removeItemFromWatchLater } from "../../redux/Features/WatchLaterSlice";
+import { setInHistory } from "../../redux/Features/HistorySlice";
 import { useSelector, useDispatch } from "react-redux";
 import { CardVideoPlaylist } from "./CardVideoPlaylist";
 import { ChipLoader } from "../index";
@@ -31,6 +32,7 @@ export const CardVideo = ({ item }) => {
   const { _id, title, thumbnail, channel, profile, views, playbackTime } = item;
 
   const { watchLaterVideos } = useSelector((state) => state.watchLaterReducer)
+  const { inHistory } = useSelector((state) => state.historyReducer);
   const dispatch = useDispatch();
   const { addToast } = useToast();
 
@@ -43,7 +45,7 @@ export const CardVideo = ({ item }) => {
 
   const { getAllPlaylists, addNewPlaylist, playlistState } = usePlaylist();
 
-  const { inHistory, setInHistory } = useHistory();
+  // const { inHistory, setInHistory } = useHistory();
 
   const ref = useRef(null);
 
@@ -117,7 +119,7 @@ export const CardVideo = ({ item }) => {
         onMouseLeave={() => setIsPlay(false)}
         onMouseEnter={() => setIsPlay(true)}
         onClick={() => {
-          encodedToken && setInHistory([...inHistory, item._id]);
+          encodedToken && dispatch(setInHistory(item._id));
         }}
         to={`${encodedToken ? `/singlevideo/${item._id}` : "/login"}`}
       >
