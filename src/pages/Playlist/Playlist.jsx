@@ -1,7 +1,8 @@
 import "../../css/main.css";
 import "./Playlist.css";
 import { useEffect } from "react";
-import { usePlaylist } from "../../context";
+import { getAllPlaylists } from "../../redux/Features/PlaylistSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { CardLoader, CardPlaylist } from "../../components";
 import { PageEmptyImage } from "../../Assets/index";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
@@ -10,12 +11,12 @@ export const Playlist = () => {
   useDocumentTitle("Easy TV | Playlists");
   useScrollToTop();
 
-  const { getAllPlaylists, playlistState } = usePlaylist();
   const { playlistLoading, playlists, playlistError, removeplaylistLoading } =
-    playlistState;
+    useSelector((state) => state.playlistReducer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getAllPlaylists();
+    dispatch(getAllPlaylists());
   }, [removeplaylistLoading]);
 
   return (

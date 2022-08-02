@@ -2,14 +2,23 @@ import "../../css/main.css";
 import "../CardVideo/CardVideo.css";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import {
-  useLikedVideo,
-  useWatchLater,
-  useHistory,
-  usePlaylist,
-} from "../../context";
+  getAllPlaylists,
+  addNewPlaylist,
+} from "../../redux/Features/PlaylistSlice";
+import {
+  addItemToWatchLater,
+  removeItemFromWatchLater,
+} from "../../redux/Features/WatchLaterSlice";
+import {
+  addItemToLikedVideos,
+  removeItemFromLikedVideos,
+} from "../../redux/Features/LikedVideoSlice";
+import { setInHistory } from "../../redux/Features/HistorySlice";
 import { CardVideoPlaylist } from "../CardVideo/CardVideoPlaylist";
 import { ChipLoader } from "../index";
+import { useToast } from "../../context/ToastContext";
 
 export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
   const [isPlay, setIsPlay] = useState(false);
@@ -18,9 +27,9 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
   const [clickedCreateNewPlaylist, setClickedCreateNewPlaylist] =
     useState(false);
   const { _id, title, thumbnail, channel, profile, views, playbackTime } = item;
-  const { removeItemFromWatchLater, addItemToWatchLater } = useWatchLater();
-  const { addItemToLikedVideos, removeItemFromLikedVideos } = useLikedVideo();
-  const { inHistory, setInHistory } = useHistory();
+  const { inHistory } = useSelector((state) => state.historyReducer);
+  const dispatch = useDispatch();
+  const { addToast } = useToast();
 
   const [playlistDetails, setPlaylistDetails] = useState({
     title: "",
@@ -32,8 +41,6 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
     isInputError: false,
   });
 
-  const { getAllPlaylists, addNewPlaylist, playlistState } = usePlaylist();
-
   const ref = useRef(null);
 
   const {
@@ -42,7 +49,7 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
     removeVideoFromPlaylistLoading,
     playlists,
     playlistError,
-  } = playlistState;
+  } = useSelector((state) => state.playlistReducer);
 
   useEffect(() => {
     const clickHandler = () => {
@@ -71,7 +78,7 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
   }, [isSavetoPlaylistClicked]);
 
   useEffect(() => {
-    getAllPlaylists();
+    dispatch(getAllPlaylists());
   }, [
     clickedCreateNewPlaylist,
     addVideoToplaylistLoading,
@@ -89,7 +96,14 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
       setPlaylistDetails({ ...playlistDetails, isInputError: true });
     } else {
       setClickedCreateNewPlaylist(false);
-      addNewPlaylist(playlistDetails);
+      // addNewPlaylist(playlistDetails);
+      if (!localStorage.getItem("videoToken")) {
+        addToast({ status: "removed", msg: "Login or SignUp first" });
+      } else {
+        dispatch(addNewPlaylist(playlistDetails))
+          .unwrap()
+          .then(() => addToast({ status: "added", msg: "Playlist added" }));
+      }
       playlistDetails.title = "";
     }
     setIsSavetoPlaylistClicked(true);
@@ -101,7 +115,8 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
         className="container-img-thumbnail-card cursor-pointer"
         onMouseLeave={() => setIsPlay(false)}
         onMouseEnter={() => setIsPlay(true)}
-        onClick={() => setInHistory([...inHistory, item._id])}
+        // onClick={() => setInHistory([...inHistory, item._id])}
+        onClick={() => dispatch(setInHistory(item._id))}
         to={`/singlevideo/${item._id}`}
       >
         <img
@@ -161,7 +176,16 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
             watchLaterVideos.some((item) => item._id === _id) ? (
               <li
                 className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => removeItemFromWatchLater(_id)}
+                onClick={() =>
+                  dispatch(removeItemFromWatchLater(_id))
+                    .unwrap()
+                    .then(() =>
+                      addToast({
+                        status: "removed",
+                        msg: "Removed from watch later",
+                      })
+                    )
+                }
               >
                 <span className="material-icons icon btn-transparent pdr-0-5">
                   watch_later
@@ -173,7 +197,13 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
             ) : (
               <li
                 className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => addItemToWatchLater(item)}
+                onClick={() =>
+                  dispatch(addItemToWatchLater(item))
+                    .unwrap()
+                    .then(() =>
+                      addToast({ status: "added", msg: "Added to watch later" })
+                    )
+                }
               >
                 <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                   watch_later
@@ -188,7 +218,16 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
             LikedVideos.some((item) => item._id === _id) ? (
               <li
                 className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => removeItemFromLikedVideos(_id)}
+                onClick={() =>
+                  dispatch(removeItemFromLikedVideos(_id))
+                    .unwrap()
+                    .then(() =>
+                      addToast({
+                        status: "removed",
+                        msg: "Removed from liked videos",
+                      })
+                    )
+                }
               >
                 <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                   favorite
@@ -198,7 +237,16 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
             ) : (
               <li
                 className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => addItemToLikedVideos(item)}
+                onClick={() =>
+                  dispatch(addItemToLikedVideos(item))
+                    .unwrap()
+                    .then(() =>
+                      addToast({
+                        status: "added",
+                        msg: "Added to liked videos",
+                      })
+                    )
+                }
               >
                 <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                   favorite_border

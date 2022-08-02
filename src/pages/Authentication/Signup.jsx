@@ -2,14 +2,18 @@ import "../../css/main.css";
 import "./authentication.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../context";
+import { useToast } from "../../context/ToastContext";
+import { useSelector, useDispatch } from "react-redux";
+import { signup, clearAuthErrorMsg } from "../../redux/Features/AuthSlice";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
 
 export const SignUp = () => {
   useDocumentTitle("Easy TV | Signup");
   useScrollToTop();
 
-  const { authErrorMsg, signup } = useAuth();
+  const { addToast } = useToast();
+  const { authErrorMsg } = useSelector((state) => state.authReducer);
+  const dispatch = useDispatch();
 
   const [userDetails, setUserDetails] = useState({
     firstName: "",
@@ -31,6 +35,16 @@ export const SignUp = () => {
 
     return () => clearTimeout(timeoutID);
   }, [error]);
+
+  useEffect(() => {
+    if (authErrorMsg) {
+      const timeoutId = setTimeout(() => {
+        dispatch(clearAuthErrorMsg());
+      }, 3000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [authErrorMsg]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -60,7 +74,9 @@ export const SignUp = () => {
     } else if (!userDetails.terms) {
       setError({ isError: true, text: "Please accept the terms & conditions" });
     } else {
-      signup(userDetails);
+      dispatch(signup(userDetails))
+        .unwrap()
+        .then(() => addToast({ status: "added", msg: "Signed Up" }));
       setUserDetails({
         firstName: "",
         lastName: "",

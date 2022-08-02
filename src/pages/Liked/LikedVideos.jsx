@@ -3,26 +3,27 @@ import "./LikedVideos.css";
 import { useEffect } from "react";
 import { PageEmptyImage } from "../../Assets/index";
 import { CardLoader, CardLikedVideo } from "../../components";
-import { useLikedVideo, useWatchLater } from "../../context";
+import { getWatchLaterVideos } from "../../redux/Features/WatchLaterSlice";
+import { getLikedVideos } from "../../redux/Features/LikedVideoSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
 
 export const LikedVideos = () => {
   useDocumentTitle("Easy TV | LikedVideos");
   useScrollToTop();
 
+  const { watchLaterVideos } = useSelector((state) => state.watchLaterReducer);
   const {
-    getLikedVideos,
     LikedVideos,
     isLikedVideosLoading,
     isLikedVideosError,
     LikedVideosErrorData,
-  } = useLikedVideo();
-
-  const { getWatchLaterVideos, watchLaterVideos } = useWatchLater();
+  } = useSelector((state) => state.likedVideoReducer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getWatchLaterVideos();
-    getLikedVideos();
+    dispatch(getWatchLaterVideos());
+    dispatch(getLikedVideos());
   }, []);
 
   return (
@@ -43,8 +44,9 @@ export const LikedVideos = () => {
       )}
 
       <div className="container-videos-liked flex flex-gap-3 flex-wrap pd-3 pdt-1">
-        {isLikedVideosError ? <div>{LikedVideosErrorData}</div>
-          :isLikedVideosLoading ? (
+        {isLikedVideosError ? (
+          <div>{LikedVideosErrorData}</div>
+        ) : isLikedVideosLoading ? (
           new Array(6).fill().map((_, id) => <CardLoader key={id} />)
         ) : LikedVideos.length > 0 ? (
           LikedVideos.map((item) => (

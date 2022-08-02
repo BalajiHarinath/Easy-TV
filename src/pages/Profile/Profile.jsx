@@ -1,20 +1,25 @@
 import "../../css/main.css";
 import "./Profile.css";
-import { useAuth, useWatchLater, useLikedVideo } from "../../context";
+import { useSelector, useDispatch } from "react-redux";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
+import { logout } from "../../redux/Features/AuthSlice";
+import { logoutWatchLaterVideos } from "../../redux/Features/WatchLaterSlice";
+import { logoutlikedVideos } from "../../redux/Features/LikedVideoSlice";
+import { useToast } from "../../context/ToastContext";
 
 export const Profile = () => {
   useDocumentTitle("Easy TV | Profile");
   useScrollToTop();
 
-  const { authData, logout } = useAuth();
-  const { logoutWatchLaterVideos } = useWatchLater();
-  const { logoutlikedVideos } = useLikedVideo();
+  const { addToast } = useToast();
+  const dispatch = useDispatch();
+  const { authData } = useSelector((state) => state.authReducer);
 
   const logoutHandler = () => {
-    logout();
-    logoutWatchLaterVideos();
-    logoutlikedVideos();
+    dispatch(logout());
+    addToast({ status: "removed", msg: "Logged out" });
+    dispatch(logoutWatchLaterVideos());
+    dispatch(logoutlikedVideos());
   };
   return (
     <div className="main-profile">

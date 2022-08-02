@@ -1,13 +1,19 @@
 import "../../css/main.css";
 import "./HeaderNav.css";
 import { Link } from "react-router-dom";
-import { useAuth, useWatchLater, useLikedVideo } from "../../context";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/Features/AuthSlice";
+import { logoutWatchLaterVideos } from "../../redux/Features/WatchLaterSlice";
+import { logoutlikedVideos } from "../../redux/Features/LikedVideoSlice";
+import { useToast } from "../../context/ToastContext";
 
 export const HeaderNav = () => {
-  const { authData, logout } = useAuth();
-  const { logoutWatchLaterVideos } = useWatchLater();
-  const { logoutlikedVideos } = useLikedVideo();
+  const { addToast } = useToast();
+  const { authData } = useSelector((state) => state.authReducer);
+
   const encodedToken = localStorage.getItem("videoToken");
+
+  const dispatch = useDispatch();
 
   return (
     <nav className="nav-header flex flex-justify-space-between flex-align-center pd-2">
@@ -21,16 +27,17 @@ export const HeaderNav = () => {
         >
           <span className="material-icons-round icon">account_circle</span>
           <span className="text-sm">
-            {authData.firstName ? authData.firstName : "User"}
+            {authData?.firstName ? authData?.firstName : "User"}
           </span>
         </Link>
         {encodedToken && (
           <Link
             className="btn-transparent flex flex-column flex-justify-center flex-align-center"
             onClick={() => {
-              logout();
-              logoutWatchLaterVideos();
-              logoutlikedVideos();
+              dispatch(logout());
+              addToast({ status: "removed", msg: "Logged out" });
+              dispatch(logoutWatchLaterVideos());
+              dispatch(logoutlikedVideos());
             }}
             to="/login"
           >
