@@ -2,30 +2,36 @@ import "../../css/main.css";
 import "./Videos.css";
 import { useState, useEffect } from "react";
 import { CardLoader, CardVideo, ChipLoader } from "../../components";
-import { useVideo, useCategory } from "../../context";
+// import { useVideo, useCategory } from "../../context";
+import { getCategories, setSelectedCategory } from "../../redux/Features/CategorySlice";
+import { getAllVideos } from "../../redux/Features/VideoSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
 
 export const VideoPage = () => {
   useDocumentTitle("Easy TV | Videos");
   useScrollToTop();
 
-  const { getAllVideos, allVideos, cardLoading, iscardError, cardErrorData } =
-    useVideo();
-  const {
-    getCategories,
-    categoryData,
-    ischipLoading,
-    ischipError,
-    chipErrorData,
-    selectedCategory,
-    setSelectedCategory,
-  } = useCategory();
+  // const { getAllVideos, allVideos, cardLoading, iscardError, cardErrorData } =
+  //   useVideo();
+  // const {
+  //   getCategories,
+  //   categoryData,
+  //   ischipLoading,
+  //   ischipError,
+  //   chipErrorData,
+  //   selectedCategory,
+  //   setSelectedCategory,
+  // } = useCategory();
+  const { allVideos, cardLoading, iscardError, cardErrorData } = useSelector((state) => state.videoReducer)
+  const { categoryData, ischipLoading, ischipError, chipErrorData, selectedCategory } = useSelector((state) => state.categoryReducer)
+  const dispatch = useDispatch();
 
   const [filteredVideos, setFilteredVideos] = useState([]);
 
   useEffect(() => {
-    getCategories();
-    getAllVideos();
+    dispatch(getCategories());
+    dispatch(getAllVideos());
   }, []);
 
   useEffect(() => {
@@ -56,7 +62,7 @@ export const VideoPage = () => {
                       : ""
                   } btn-category font-semibold`}
                   key={item._id}
-                  onClick={() => setSelectedCategory(item.categoryName)}
+                  onClick={() => dispatch(setSelectedCategory(item.categoryName))}
                 >
                   {item.categoryName}
                 </button>

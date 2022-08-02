@@ -5,26 +5,32 @@ import { Link } from "react-router-dom";
 import { heroImage } from "../../Assets/index.js";
 import { CardLoader, CardVideo, ChipLoader } from "../../components";
 import { useVideo, useCategory } from "../../context";
+import { getCategories, setSelectedCategory } from "../../redux/Features/CategorySlice";
+import { getAllVideos } from "../../redux/Features/VideoSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
 
 export const Home = () => {
   useDocumentTitle("Easy TV | Home");
   useScrollToTop();
 
-  const { getAllVideos, allVideos, cardLoading, iscardError, cardErrorData } = useVideo();
-  const {
-    getCategories,
-    categoryData,
-    ischipLoading,
-    ischipError,
-    chipErrorData,
-    setSelectedCategory,
-  } = useCategory();
+  // const { getAllVideos, allVideos, cardLoading, iscardError, cardErrorData } = useVideo();
+  // const {
+  //   getCategories,
+  //   categoryData,
+  //   ischipLoading,
+  //   ischipError,
+  //   chipErrorData,
+  //   setSelectedCategory,
+  // } = useCategory();
+  const { allVideos, iscardLoading, iscardError, cardErrorData } = useSelector((state) => state.videoReducer)
+  const { categoryData, ischipLoading, ischipError, chipErrorData } = useSelector((state) => state.categoryReducer)
+  const dispatch = useDispatch();
 
   let mustWatchVideos = [];
   useEffect(() => {
-    getCategories();
-    getAllVideos();
+    dispatch(getCategories());
+    dispatch(getAllVideos());
   }, []);
 
   const getMustWatchVideos = () => allVideos.filter((item) => item.isMustWatch);
@@ -60,7 +66,7 @@ export const Home = () => {
                 <Link
                   className="btn-category font-semibold"
                   key={item._id}
-                  onClick={() => setSelectedCategory(item.categoryName)}
+                  onClick={() => dispatch(setSelectedCategory(item.categoryName))}
                   to="/videos"
                 >
                   {item.categoryName}
@@ -76,7 +82,7 @@ export const Home = () => {
       <div className="spacer-1"></div>
       <div className="container-must-watch-videos flex flex-wrap flex-gap-2">
         {iscardError ? <div>{cardErrorData}</div> 
-          :!cardLoading
+          :!iscardLoading
           ? mustWatchVideos.map((item) => (
               <CardVideo item={item} key={item._id} />
             ))

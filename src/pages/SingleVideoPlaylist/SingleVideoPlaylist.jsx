@@ -9,6 +9,8 @@ import {
   SingleCardVideo,
 } from "../../components";
 import { useSingleVideo, usePlaylist } from "../../context";
+import { getSingleVideo } from "../../redux/Features/SingleVideoSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
 
 export const SingleVideoPlaylist = () => {
@@ -17,17 +19,19 @@ export const SingleVideoPlaylist = () => {
 
   const { singleplaylistId, singlevideoId } = useParams();
 
-  const {
-    getSingleVideo,
-    singleVideo,
-    issinglecardLoading,
-    issinglecardError,
-    singlecardErrorData,
-  } = useSingleVideo();
+  // const {
+  //   getSingleVideo,
+  //   singleVideo,
+  //   issinglecardLoading,
+  //   issinglecardError,
+  //   singlecardErrorData,
+  // } = useSingleVideo();
+  const { singleVideo, issinglecardLoading, issinglecardError, singlecardErrorData } = useSelector((state) => state.singleVideoReducer)
 
   const { getVideosFromPlaylist, playlistState } = usePlaylist();
   const { playlistLoading, playlist } = playlistState;
 
+  const dispatch = useDispatch();
   const [filteredVideos, setFilteredVideos] = useState([]);
 
   useEffect(() => {
@@ -35,7 +39,7 @@ export const SingleVideoPlaylist = () => {
   }, []);
 
   useEffect(() => {
-    getSingleVideo(singlevideoId);
+    dispatch(getSingleVideo(singlevideoId));
   }, []);
 
   useEffect(() => {
