@@ -2,16 +2,15 @@ import "../../css/main.css";
 import "./CardPlaylist.css";
 import { Link } from "react-router-dom";
 import { PlaylistEmptyImage } from "../../Assets/index";
-import { useHistory, usePlaylist } from "../../context";
+import { removePlaylist } from "../../redux/Features/PlaylistSlice";
 import { setInHistory } from "../../redux/Features/HistorySlice";
 import { useSelector, useDispatch } from "react-redux";
+import { useToast } from "../../context/ToastContext";
 
 export const CardPlaylist = ({ playlist }) => {
-  // const { inHistory, setInHistory } = useHistory();
   const { inHistory } = useSelector((state) => state.historyReducer);
   const dispatch = useDispatch();
-
-  const { removePlaylist } = usePlaylist();
+  const { addToast } = useToast();
 
   if (playlist?.videos?.length !== 0) {
     var src = playlist.videos[0].thumbnail.url;
@@ -61,7 +60,13 @@ export const CardPlaylist = ({ playlist }) => {
           </Link>
           <button
             className="btn-remove-playlist btn-transparent"
-            onClick={() => removePlaylist(playlist?._id)}
+            onClick={() =>
+              dispatch(removePlaylist(playlist?._id))
+                .unwrap()
+                .then(() =>
+                  addToast({ status: "removed", msg: "Playlist removed" })
+                )
+            }
           >
             <span className="material-icons icon btn-transparent pdr-0-5">
               delete

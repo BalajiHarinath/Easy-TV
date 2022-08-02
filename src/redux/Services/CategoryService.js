@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const getCategoriesService = async () => {
-    const response = await axios.get("/api/categories");
-    return response;
-}
+  const response = await axios.get("/api/categories");
+  return response;
+};

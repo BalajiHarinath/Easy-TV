@@ -1,34 +1,26 @@
 import "../../css/main.css";
 import "./SingleCardVideo.css";
 import { useEffect } from "react";
-import { useLikedVideo, useHistory } from "../../context";
 import { useSelector, useDispatch } from "react-redux";
-import { getWatchLaterVideos, addItemToWatchLater, removeItemFromWatchLater } from "../../redux/Features/WatchLaterSlice";
-import { getLikedVideos, addItemToLikedVideos, removeItemFromLikedVideos } from "../../redux/Features/LikedVideoSlice";
+import {
+  getWatchLaterVideos,
+  addItemToWatchLater,
+  removeItemFromWatchLater,
+} from "../../redux/Features/WatchLaterSlice";
+import {
+  getLikedVideos,
+  addItemToLikedVideos,
+  removeItemFromLikedVideos,
+} from "../../redux/Features/LikedVideoSlice";
 import { addVideoToHistory } from "../../redux/Features/HistorySlice";
 import { useToast } from "../../context/ToastContext";
 
 export const SingleCardVideo = ({ singleVideo }) => {
-  // const {
-  //   getWatchLaterVideos,
-  //   removeItemFromWatchLater,
-  //   addItemToWatchLater,
-  //   watchLaterVideos,
-  // } = useWatchLater();
   const { watchLaterVideos } = useSelector((state) => state.watchLaterReducer);
   const { LikedVideos } = useSelector((state) => state.likedVideoReducer);
-  const { inHistory } = useSelector((state) => state.historyReducer)
+  const { inHistory } = useSelector((state) => state.historyReducer);
   const dispatch = useDispatch();
   const { addToast } = useToast();
-
-  // const {
-  //   getLikedVideos,
-  //   addItemToLikedVideos,
-  //   removeItemFromLikedVideos,
-  //   LikedVideos,
-  // } = useLikedVideo();
-
-  // const { inHistory, addVideoToHistory } = useHistory();
 
   useEffect(() => {
     dispatch(getWatchLaterVideos());
@@ -174,7 +166,16 @@ export const SingleCardVideo = ({ singleVideo }) => {
             {LikedVideos.some((item) => item._id === singleVideo._id) ? (
               <button
                 className="btn-single-video btn-single-video-active font-semibold flex flex-align-center cursor-pointer"
-                onClick={() => dispatch(removeItemFromLikedVideos(singleVideo._id)).unwrap().then(() => addToast({ status: "removed", msg: "Removed from liked videos" }))}
+                onClick={() =>
+                  dispatch(removeItemFromLikedVideos(singleVideo._id))
+                    .unwrap()
+                    .then(() =>
+                      addToast({
+                        status: "removed",
+                        msg: "Removed from liked videos",
+                      })
+                    )
+                }
                 // onClick={removeFromLikedVideosThrottle}
               >
                 <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">
@@ -185,7 +186,16 @@ export const SingleCardVideo = ({ singleVideo }) => {
             ) : (
               <button
                 className="btn-single-video font-semibold flex flex-align-center cursor-pointer"
-                onClick={() => dispatch(addItemToLikedVideos(singleVideo)).unwrap().then(() => addToast({ status: "added", msg: "Added to liked videos" }))}
+                onClick={() =>
+                  dispatch(addItemToLikedVideos(singleVideo))
+                    .unwrap()
+                    .then(() =>
+                      addToast({
+                        status: "added",
+                        msg: "Added to liked videos",
+                      })
+                    )
+                }
                 // onClick={addToLikedVideosThrottle}
               >
                 <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">
@@ -198,7 +208,16 @@ export const SingleCardVideo = ({ singleVideo }) => {
             {watchLaterVideos.some((item) => item._id === singleVideo._id) ? (
               <button
                 className="btn-single-video btn-single-video-active font-semibold flex flex-align-center cursor-pointer"
-                onClick={() => dispatch(removeItemFromWatchLater(singleVideo._id)).unwrap().then(() => addToast({ status: "removed", msg: "Removed from watch later" }))}
+                onClick={() =>
+                  dispatch(removeItemFromWatchLater(singleVideo._id))
+                    .unwrap()
+                    .then(() =>
+                      addToast({
+                        status: "removed",
+                        msg: "Removed from watch later",
+                      })
+                    )
+                }
                 // onClick={removeFromWatchLaterVideosThrottle}
               >
                 <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">
@@ -209,7 +228,13 @@ export const SingleCardVideo = ({ singleVideo }) => {
             ) : (
               <button
                 className="btn-single-video font-semibold flex flex-align-center cursor-pointer"
-                onClick={() => dispatch(addItemToWatchLater(singleVideo)).unwrap().then(() => addToast({ status: "added", msg: "Added to watch later" }))}
+                onClick={() =>
+                  dispatch(addItemToWatchLater(singleVideo))
+                    .unwrap()
+                    .then(() =>
+                      addToast({ status: "added", msg: "Added to watch later" })
+                    )
+                }
                 // onClick={addToWatchLaterVideosThrottle}
               >
                 <span className="material-icons-round icon text-sm pdr-0-5 btn-transparent">

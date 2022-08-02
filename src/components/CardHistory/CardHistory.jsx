@@ -2,10 +2,12 @@ import "../../css/main.css";
 import "../CardVideo/CardVideo.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { removeVideoFromHistory, removeFromHistory } from "../../redux/Features/HistorySlice";
+import {
+  removeVideoFromHistory,
+  removeFromHistory,
+} from "../../redux/Features/HistorySlice";
 import { useDispatch } from "react-redux";
 import { useToast } from "../../context/ToastContext";
-// import { useHistory } from "../../context";
 
 export const CardHistory = ({ item }) => {
   const [isPlay, setIsPlay] = useState(false);
@@ -14,7 +16,6 @@ export const CardHistory = ({ item }) => {
 
   const { addToast } = useToast();
   const dispatch = useDispatch();
-  // const { removeVideoFromHistory } = useHistory();
 
   useEffect(() => {
     const clickHandler = () => {
@@ -90,8 +91,14 @@ export const CardHistory = ({ item }) => {
           <ul className="list-style-none pd-0-5">
             <li
               className="item-container-overlay-text-video-card flex flex-align-center"
-              onClick={() => {dispatch(removeVideoFromHistory(_id)).unwrap().then(() => addToast({ status: "removed", msg: "Removed from history" }));
-              dispatch(removeFromHistory(_id))}}
+              onClick={() => {
+                dispatch(removeVideoFromHistory(_id))
+                  .unwrap()
+                  .then(() =>
+                    addToast({ status: "removed", msg: "Removed from history" })
+                  );
+                dispatch(removeFromHistory(_id));
+              }}
             >
               <span className="material-icons icon btn-transparent pdr-0-5">
                 delete

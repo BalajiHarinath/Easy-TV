@@ -2,7 +2,6 @@ import "../../css/main.css";
 import "./authentication.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { useAuth } from "../../context";
 import { useToast } from "../../context/ToastContext";
 import { useDispatch, useSelector } from "react-redux";
 import { login, testlogin, clearAuthErrorMsg } from "../../redux/Features/AuthSlice";
@@ -12,9 +11,8 @@ export const Login = () => {
   useDocumentTitle("Easy TV | Login");
   useScrollToTop();
 
-  // const { authErrorMsg, login, testlogin } = useAuth();
   const { addToast } = useToast();
-  const { authErrorMsg, authData } = useSelector((state) => state.authReducer);
+  const { authErrorMsg } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [showPasswordToggle, setShowPasswordToggle] = useState(true);
   const [error, setError] = useState({ isError: false, text: "" });

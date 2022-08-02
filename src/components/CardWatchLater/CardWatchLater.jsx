@@ -2,13 +2,15 @@ import "../../css/main.css";
 import "../CardVideo/CardVideo.css";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import {
-  useLikedVideo,
-  useHistory,
-  usePlaylist,
-} from "../../context";
 import { useSelector, useDispatch } from "react-redux";
-import { addItemToWatchLater, removeItemFromWatchLater } from "../../redux/Features/WatchLaterSlice";
+import {
+  getAllPlaylists,
+  addNewPlaylist,
+} from "../../redux/Features/PlaylistSlice";
+import {
+  addItemToWatchLater,
+  removeItemFromWatchLater,
+} from "../../redux/Features/WatchLaterSlice";
 import {
   addItemToLikedVideos,
   removeItemFromLikedVideos,
@@ -25,9 +27,6 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
   const [clickedCreateNewPlaylist, setClickedCreateNewPlaylist] =
     useState(false);
   const { _id, title, thumbnail, channel, profile, views, playbackTime } = item;
-  // const { removeItemFromWatchLater, addItemToWatchLater } = useWatchLater();
-  // const { addItemToLikedVideos, removeItemFromLikedVideos } = useLikedVideo();
-  // const { inHistory, setInHistory } = useHistory();
   const { inHistory } = useSelector((state) => state.historyReducer);
   const dispatch = useDispatch();
   const { addToast } = useToast();
@@ -42,8 +41,6 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
     isInputError: false,
   });
 
-  const { getAllPlaylists, addNewPlaylist, playlistState } = usePlaylist();
-
   const ref = useRef(null);
 
   const {
@@ -52,7 +49,7 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
     removeVideoFromPlaylistLoading,
     playlists,
     playlistError,
-  } = playlistState;
+  } = useSelector((state) => state.playlistReducer);
 
   useEffect(() => {
     const clickHandler = () => {
@@ -81,7 +78,7 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
   }, [isSavetoPlaylistClicked]);
 
   useEffect(() => {
-    getAllPlaylists();
+    dispatch(getAllPlaylists());
   }, [
     clickedCreateNewPlaylist,
     addVideoToplaylistLoading,
@@ -99,7 +96,14 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
       setPlaylistDetails({ ...playlistDetails, isInputError: true });
     } else {
       setClickedCreateNewPlaylist(false);
-      addNewPlaylist(playlistDetails);
+      // addNewPlaylist(playlistDetails);
+      if (!localStorage.getItem("videoToken")) {
+        addToast({ status: "removed", msg: "Login or SignUp first" });
+      } else {
+        dispatch(addNewPlaylist(playlistDetails))
+          .unwrap()
+          .then(() => addToast({ status: "added", msg: "Playlist added" }));
+      }
       playlistDetails.title = "";
     }
     setIsSavetoPlaylistClicked(true);
@@ -172,7 +176,16 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
             watchLaterVideos.some((item) => item._id === _id) ? (
               <li
                 className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => dispatch(removeItemFromWatchLater(_id)).unwrap().then(() => addToast({ status: "removed", msg: "Removed from watch later" }))}
+                onClick={() =>
+                  dispatch(removeItemFromWatchLater(_id))
+                    .unwrap()
+                    .then(() =>
+                      addToast({
+                        status: "removed",
+                        msg: "Removed from watch later",
+                      })
+                    )
+                }
               >
                 <span className="material-icons icon btn-transparent pdr-0-5">
                   watch_later
@@ -184,7 +197,13 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
             ) : (
               <li
                 className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => dispatch(addItemToWatchLater(item)).unwrap().then(() => addToast({ status: "added", msg: "Added to watch later" }))}
+                onClick={() =>
+                  dispatch(addItemToWatchLater(item))
+                    .unwrap()
+                    .then(() =>
+                      addToast({ status: "added", msg: "Added to watch later" })
+                    )
+                }
               >
                 <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                   watch_later
@@ -199,7 +218,16 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
             LikedVideos.some((item) => item._id === _id) ? (
               <li
                 className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => dispatch(removeItemFromLikedVideos(_id)).unwrap().then(() => addToast({ status: "removed", msg: "Removed from liked videos" }))}
+                onClick={() =>
+                  dispatch(removeItemFromLikedVideos(_id))
+                    .unwrap()
+                    .then(() =>
+                      addToast({
+                        status: "removed",
+                        msg: "Removed from liked videos",
+                      })
+                    )
+                }
               >
                 <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                   favorite
@@ -209,7 +237,16 @@ export const CardWatchLater = ({ item, watchLaterVideos, LikedVideos }) => {
             ) : (
               <li
                 className="item-container-overlay-text-video-card flex flex-align-center"
-                onClick={() => dispatch(addItemToLikedVideos(item)).unwrap().then(() => addToast({ status: "added", msg: "Added to liked videos" }))}
+                onClick={() =>
+                  dispatch(addItemToLikedVideos(item))
+                    .unwrap()
+                    .then(() =>
+                      addToast({
+                        status: "added",
+                        msg: "Added to liked videos",
+                      })
+                    )
+                }
               >
                 <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                   favorite_border

@@ -8,29 +8,35 @@ import {
   CardLoader,
   PlaylistDetailsHeadingLoader,
 } from "../../components";
-import { usePlaylist } from "../../context";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getVideosFromPlaylist,
+  removePlaylist,
+} from "../../redux/Features/PlaylistSlice";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
+import { useToast } from "../../context/ToastContext";
 
 export const PlaylistDetails = () => {
   useDocumentTitle("Easy TV | PlaylistVideos");
   useScrollToTop();
 
-  const { getVideosFromPlaylist, removePlaylist, playlistState } =
-    usePlaylist();
   const {
     playlistLoading,
     playlist,
+    playlistError,
     removeplaylistLoading,
     removeVideoFromPlaylistLoading,
-  } = playlistState;
+  } = useSelector((state) => state.playlistReducer);
+  const dispatch = useDispatch();
+  const { addToast } = useToast();
   const { playlistId } = useParams();
 
   useEffect(() => {
-    getVideosFromPlaylist(playlistId);
+    dispatch(getVideosFromPlaylist(playlistId));
   }, [removeVideoFromPlaylistLoading]);
 
   useEffect(() => {
-    getVideosFromPlaylist(playlistId);
+    dispatch(getVideosFromPlaylist(playlistId));
   }, [removeplaylistLoading]);
 
   return (
@@ -43,7 +49,13 @@ export const PlaylistDetails = () => {
         <div className="position-relative">
           <button
             className="btn-clear-all font-semibold"
-            onClick={() => removePlaylist(playlistId)}
+            onClick={() =>
+              dispatch(removePlaylist(playlistId))
+                .unwrap()
+                .then(() =>
+                  addToast({ status: "removed", msg: "Playlist removed" })
+                )
+            }
           >
             Clear Playlist
           </button>

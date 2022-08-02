@@ -1,6 +1,5 @@
 import "../../css/main.css";
 import "./Profile.css";
-// import { useAuth, useLikedVideo } from "../../context";
 import { useSelector, useDispatch } from "react-redux";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
 import { logout } from "../../redux/Features/AuthSlice";
@@ -12,12 +11,9 @@ export const Profile = () => {
   useDocumentTitle("Easy TV | Profile");
   useScrollToTop();
 
-  // const { authData, logout } = useAuth();
   const { addToast } = useToast();
   const dispatch = useDispatch();
   const { authData } = useSelector((state) => state.authReducer);
-  // const { logoutWatchLaterVideos } = useWatchLater();
-  // const { logoutlikedVideos } = useLikedVideo();
 
   const logoutHandler = () => {
     dispatch(logout());

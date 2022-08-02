@@ -2,8 +2,15 @@ import "../../css/main.css";
 import "./CardVideo.css";
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useHistory, usePlaylist } from "../../context";
-import { getWatchLaterVideos, addItemToWatchLater, removeItemFromWatchLater } from "../../redux/Features/WatchLaterSlice";
+import {
+  getAllPlaylists,
+  addNewPlaylist,
+} from "../../redux/Features/PlaylistSlice";
+import {
+  getWatchLaterVideos,
+  addItemToWatchLater,
+  removeItemFromWatchLater,
+} from "../../redux/Features/WatchLaterSlice";
 import { setInHistory } from "../../redux/Features/HistorySlice";
 import { useSelector, useDispatch } from "react-redux";
 import { CardVideoPlaylist } from "./CardVideoPlaylist";
@@ -31,21 +38,10 @@ export const CardVideo = ({ item }) => {
 
   const { _id, title, thumbnail, channel, profile, views, playbackTime } = item;
 
-  const { watchLaterVideos } = useSelector((state) => state.watchLaterReducer)
+  const { watchLaterVideos } = useSelector((state) => state.watchLaterReducer);
   const { inHistory } = useSelector((state) => state.historyReducer);
   const dispatch = useDispatch();
   const { addToast } = useToast();
-
-  // const {
-  //   getWatchLaterVideos,
-  //   removeItemFromWatchLater,
-  //   addItemToWatchLater,
-  //   watchLaterVideos,
-  // } = useWatchLater();
-
-  const { getAllPlaylists, addNewPlaylist, playlistState } = usePlaylist();
-
-  // const { inHistory, setInHistory } = useHistory();
 
   const ref = useRef(null);
 
@@ -55,7 +51,7 @@ export const CardVideo = ({ item }) => {
     removeVideoFromPlaylistLoading,
     playlists,
     playlistError,
-  } = playlistState;
+  } = useSelector((state) => state.playlistReducer);
 
   useEffect(() => {
     const clickHandler = () => {
@@ -88,7 +84,7 @@ export const CardVideo = ({ item }) => {
   }, []);
 
   useEffect(() => {
-    encodedToken && getAllPlaylists();
+    encodedToken && dispatch(getAllPlaylists());
   }, [
     clickedCreateNewPlaylist,
     addVideoToplaylistLoading,
@@ -106,7 +102,14 @@ export const CardVideo = ({ item }) => {
       setPlaylistDetails({ ...playlistDetails, isInputError: true });
     } else {
       setClickedCreateNewPlaylist(false);
-      addNewPlaylist(playlistDetails);
+      // addNewPlaylist(playlistDetails);
+      if (!localStorage.getItem("videoToken")) {
+        addToast({ status: "removed", msg: "Login or SignUp first" });
+      } else {
+        dispatch(addNewPlaylist(playlistDetails))
+          .unwrap()
+          .then(() => addToast({ status: "added", msg: "Playlist added" }));
+      }
       playlistDetails.title = "";
     }
     setIsSavetoPlaylistClicked(true);
@@ -180,7 +183,16 @@ export const CardVideo = ({ item }) => {
               watchLaterVideos.some((item) => item._id === _id) ? (
                 <li
                   className="item-container-overlay-text-video-card flex flex-align-center"
-                  onClick={() => dispatch(removeItemFromWatchLater(_id)).unwrap().then(() => addToast({ status: "removed", msg: "Removed from watch later" }))}
+                  onClick={() =>
+                    dispatch(removeItemFromWatchLater(_id))
+                      .unwrap()
+                      .then(() =>
+                        addToast({
+                          status: "removed",
+                          msg: "Removed from watch later",
+                        })
+                      )
+                  }
                 >
                   <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                     watch_later
@@ -192,7 +204,16 @@ export const CardVideo = ({ item }) => {
               ) : (
                 <li
                   className="item-container-overlay-text-video-card flex flex-align-center"
-                  onClick={() => dispatch(addItemToWatchLater(item)).unwrap().then(() => addToast({ status: "added", msg: "Added to watch later" }))}
+                  onClick={() =>
+                    dispatch(addItemToWatchLater(item))
+                      .unwrap()
+                      .then(() =>
+                        addToast({
+                          status: "added",
+                          msg: "Added to watch later",
+                        })
+                      )
+                  }
                 >
                   <span className="material-icons-outlined icon btn-transparent pdr-0-5">
                     watch_later

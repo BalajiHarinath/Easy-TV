@@ -3,8 +3,11 @@ import "./History.css";
 import { useEffect } from "react";
 import { PageEmptyImage } from "../../Assets/index";
 import { CardLoader, CardHistory } from "../../components";
-// import { useHistory } from "../../context";
-import { getHistoryVideos, clearHistory, setInHistory } from "../../redux/Features/HistorySlice";
+import {
+  getHistoryVideos,
+  clearHistory,
+  setInHistory,
+} from "../../redux/Features/HistorySlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useDocumentTitle, useScrollToTop } from "../../utils";
 
@@ -12,16 +15,10 @@ export const History = () => {
   useDocumentTitle("Easy TV | History");
   useScrollToTop();
 
-  // const {
-  //   getHistoryVideos,
-  //   clearHistory,
-  //   HistoryData,
-  //   isHistoryLoading,
-  //   setInHistory,
-  // } = useHistory();
-
   const dispatch = useDispatch();
-  const { HistoryData, isHistoryLoading } = useSelector((state) => state.historyReducer)
+  const { HistoryData, isHistoryLoading } = useSelector(
+    (state) => state.historyReducer
+  );
 
   useEffect(() => {
     dispatch(getHistoryVideos());
@@ -35,7 +32,8 @@ export const History = () => {
             className="btn-clear-all font-semibold"
             onClick={() => {
               dispatch(clearHistory());
-              dispatch(setInHistory([]))}}
+              dispatch(setInHistory([]));
+            }}
           >
             Clear All
           </button>
@@ -54,10 +52,12 @@ export const History = () => {
         </h4>
       )}
       <div className="container-videos-history flex flex-gap-3 flex-wrap pd-3 pdt-1">
-        {isHistoryLoading && ( new Array(6).fill().map((_, id) => <CardLoader key={id} />))}
-        {HistoryData.length > 0 && !isHistoryLoading &&(
-          HistoryData.map((item) => <CardHistory key={item._id} item={item} />)) }
-        {HistoryData.length === 0 && !isHistoryLoading &&(
+        {isHistoryLoading &&
+          new Array(6).fill().map((_, id) => <CardLoader key={id} />)}
+        {HistoryData.length > 0 &&
+          !isHistoryLoading &&
+          HistoryData.map((item) => <CardHistory key={item._id} item={item} />)}
+        {HistoryData.length === 0 && !isHistoryLoading && (
           <div className="conatiner-liked-videos-empty">
             <img
               className="image-watch-later"

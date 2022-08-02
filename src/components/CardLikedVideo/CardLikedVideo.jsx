@@ -3,11 +3,9 @@ import "../CardVideo/CardVideo.css";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
-  useLikedVideo,
-  useWatchLater,
-  useHistory,
-  usePlaylist,
-} from "../../context";
+  getAllPlaylists,
+  addNewPlaylist,
+} from "../../redux/Features/PlaylistSlice";
 import {
   addItemToWatchLater,
   removeItemFromWatchLater,
@@ -29,10 +27,7 @@ export const CardLikedVideo = ({ item, watchLaterVideos, LikedVideos }) => {
   const [clickedCreateNewPlaylist, setClickedCreateNewPlaylist] =
     useState(false);
   const { _id, title, thumbnail, channel, profile, views, playbackTime } = item;
-  // const { removeItemFromWatchLater, addItemToWatchLater } = useWatchLater();
-  // const { addItemToLikedVideos, removeItemFromLikedVideos } = useLikedVideo();
-  // const { inHistory, setInHistory } = useHistory();
-  const { inHistory } = useSelector((state) => state.historyReducer)
+  // const { inHistory } = useSelector((state) => state.historyReducer);
   const dispatch = useDispatch();
   const { addToast } = useToast();
 
@@ -46,8 +41,6 @@ export const CardLikedVideo = ({ item, watchLaterVideos, LikedVideos }) => {
     isInputError: false,
   });
 
-  const { getAllPlaylists, addNewPlaylist, playlistState } = usePlaylist();
-
   const ref = useRef(null);
 
   const {
@@ -56,7 +49,7 @@ export const CardLikedVideo = ({ item, watchLaterVideos, LikedVideos }) => {
     removeVideoFromPlaylistLoading,
     playlists,
     playlistError,
-  } = playlistState;
+  } = useSelector((state) => state.playlistReducer);
 
   useEffect(() => {
     const clickHandler = () => {
@@ -85,7 +78,7 @@ export const CardLikedVideo = ({ item, watchLaterVideos, LikedVideos }) => {
   }, [isSavetoPlaylistClicked]);
 
   useEffect(() => {
-    getAllPlaylists();
+    dispatch(getAllPlaylists());
   }, [
     clickedCreateNewPlaylist,
     addVideoToplaylistLoading,
@@ -103,7 +96,14 @@ export const CardLikedVideo = ({ item, watchLaterVideos, LikedVideos }) => {
       setPlaylistDetails({ ...playlistDetails, isInputError: true });
     } else {
       setClickedCreateNewPlaylist(false);
-      addNewPlaylist(playlistDetails);
+      // addNewPlaylist(playlistDetails);
+      if (!localStorage.getItem("videoToken")) {
+        addToast({ status: "removed", msg: "Login or SignUp first" });
+      } else {
+        dispatch(addNewPlaylist(playlistDetails))
+          .unwrap()
+          .then(() => addToast({ status: "added", msg: "Playlist added" }));
+      }
       playlistDetails.title = "";
     }
     setIsSavetoPlaylistClicked(true);

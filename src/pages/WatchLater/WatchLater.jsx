@@ -3,7 +3,6 @@ import "./WatchLater.css";
 import { useEffect } from "react";
 import { PageEmptyImage } from "../../Assets/index";
 import { CardLoader, CardWatchLater } from "../../components";
-// import { useLikedVideo } from "../../context";
 import { useSelector, useDispatch } from "react-redux";
 import { getWatchLaterVideos } from "../../redux/Features/WatchLaterSlice";
 import { getLikedVideos } from "../../redux/Features/LikedVideoSlice";
@@ -13,18 +12,13 @@ export const WatchLater = () => {
   useDocumentTitle("Easy TV | WatchLater");
   useScrollToTop();
 
-  // const {
-  //   getWatchLaterVideos,
-  //   watchLaterVideos,
-  //   isWatchLaterVideoLoading,
-  //   isWatchlaterVideoError,
-  //   watchlaterVideoErrorData,
-  // } = useWatchLater();
-
-  const { watchLaterVideos, isWatchLaterVideoLoading, isWatchlaterVideoError, watchlaterVideoErrorData } = useSelector((state) => state.watchLaterReducer)
-
-  // const { getLikedVideos, LikedVideos } = useLikedVideo();
-  const { LikedVideos } = useSelector((state) => state.likedVideoReducer)
+  const {
+    watchLaterVideos,
+    isWatchLaterVideoLoading,
+    isWatchlaterVideoError,
+    watchlaterVideoErrorData,
+  } = useSelector((state) => state.watchLaterReducer);
+  const { LikedVideos } = useSelector((state) => state.likedVideoReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,8 +42,9 @@ export const WatchLater = () => {
       )}
 
       <div className="container-videos-watchlater flex flex-gap-3 flex-wrap pd-3 pdt-1">
-        {isWatchlaterVideoError ? <div>{watchlaterVideoErrorData}</div>
-          : isWatchLaterVideoLoading ? (
+        {isWatchlaterVideoError ? (
+          <div>{watchlaterVideoErrorData}</div>
+        ) : isWatchLaterVideoLoading ? (
           new Array(6).fill().map((_, id) => <CardLoader key={id} />)
         ) : watchLaterVideos.length > 0 ? (
           watchLaterVideos.map((item) => (

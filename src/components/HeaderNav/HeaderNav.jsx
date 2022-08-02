@@ -6,16 +6,11 @@ import { logout } from "../../redux/Features/AuthSlice";
 import { logoutWatchLaterVideos } from "../../redux/Features/WatchLaterSlice";
 import { logoutlikedVideos } from "../../redux/Features/LikedVideoSlice";
 import { useToast } from "../../context/ToastContext";
-import { useAuth, useWatchLater, useLikedVideo } from "../../context";
 
 export const HeaderNav = () => {
-  // const { authData, logout } = useAuth();
   const { addToast } = useToast();
   const { authData } = useSelector((state) => state.authReducer);
 
-  // console.log(authData)
-  // const { logoutWatchLaterVideos } = useWatchLater();
-  // const { logoutlikedVideos } = useLikedVideo();
   const encodedToken = localStorage.getItem("videoToken");
 
   const dispatch = useDispatch();
